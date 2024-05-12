@@ -1,0 +1,140 @@
+# Function to check if directory exists and change to it
+cd_to_directory() {
+    local directory="$1"
+    if [ -z "$directory" ]; then
+        cd ~/
+    elif [ -d "$directory" ]; then
+        cd "$directory"
+    else
+        printf "\e[1;31m'$directory'\e[0m does not exist. Would you like to create it? [ y/n ]\n"
+        read -n1 -rep "Select:" makeDir
+
+        if [[ "$makeDir" == "y" || "$makeDir" == "Y" ]]; then
+            mkdir -p "$directory" && cd "$directory"
+        else
+            printf "Then why the hell did you try to\e[1;32m cd \e[1;0minto \e[1;31m$directory\e[1;0m ??? \n"
+        fi
+    fi
+}
+
+ex () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;  # install unzip first
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *.deb)       ar x $1      ;;
+      *.tar.xz)    tar xf $1    ;;
+      *.tar.zst)   tar xf $1    ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# remove files and directories
+fn_removal() {
+    local dir_or_file="$1"
+
+    if [ -f "$dir_or_file" ]; then
+        rm "$dir_or_file" -v
+    elif [ -d "$dir_or_file" ]; then
+        rm -r "$dir_or_file" -v
+    else
+        printf "\e[1;31m'$dir_or_file' does not exist or is neither a regular file nor a directory.\e[0m\n"
+    fi
+}
+
+# check updates
+fn_check_updates() {
+    if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+        aur=$(command -v yay || command -v paru) # find the aur helper
+        case "$1" in
+            main) checkupdates | wc -l
+                ;;
+            aur) "$aur" -Qua | wc -l
+                ;;
+        esac
+
+    elif [ -n "$(command -v dnf)" ]; then  # Fedora
+        dnf check-update -q | wc -l
+    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+        zypper lu --best-effort | grep -c 'v |'
+    else
+        echo "Unsupported distribution."
+        return 1
+    fi
+}
+
+# package updates
+fn_update() {
+    if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+        aur=$(command -v yay || command -v paru) # find the aur helper
+        case "$1" in
+            main) sudo pacman -Syu
+                ;;
+            aur) $aur -Syu "$@"
+                ;;
+        esac
+
+    elif [ -n "$(command -v dnf)" ]; then  # Fedora
+        sudo dnf update -y && sudo dnf upgrade -y --refresh
+    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+        sudo zypper up && sudo zypper ref
+    else
+        echo "Unsupported distribution."
+        return 1
+    fi
+}
+
+
+# Install software
+fn_install() {
+    if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+        aur=$(command -v yay || command -v paru) # find the aur helper
+        case "$1" in
+            main) sudo pacman -S "$@"
+                ;;
+            aur) $aur -S "$@"
+                ;;
+            *) printf "Sorry, could not install \e[1;31m"$@"\e[1;0m...\n"
+        esac
+
+    elif [ -n "$(command -v dnf)" ]; then  # Fedora
+        sudo dnf install -y "$@"
+    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+        sudo zypper in "$@"
+    else
+        echo "Unsupported distribution."
+        return 1
+    fi
+}
+
+# package install
+fn_uninstall() {
+    if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+        aur=$(command -v yay || command -v paru) # find the aur helper
+        case "$1" in
+            main) sudo pacman -Rns
+                ;;
+            aur) $aur -Rns
+                ;;
+        esac
+    elif [ -n "$(command -v dnf)" ]; then  # Fedora
+        sudo dnf remove "$@"
+    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+        sudo zypper rm "$@"
+    else
+        echo "Unsupported distribution."
+        return 1
+    fi
+}

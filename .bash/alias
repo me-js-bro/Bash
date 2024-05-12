@@ -1,0 +1,69 @@
+source ~/.bash/functions
+
+## list ##
+# Custom LS_COLORS
+LS_COLORS='di=36:fi=33:*.sh=32:*.*=35'
+
+alias ls='ls --color=auto --group-directories-first'
+alias la='ls -a'
+alias lsf='ls --color=auto --file-type'
+alias lsh='ls --color=auto --almost-all'
+alias ll='ls -alFh'
+alias l='ls'
+alias l.="ls -A | egrep '^\.'"
+
+# extract files
+alias ex='ex'
+
+# other
+alias rc='source ~/.bashrc && clr && nc' #source .bashrc
+alias clr='clear'   #clear
+
+# change directory & directory related
+alias cD='cd ~/Downloads'
+alias cP='cd ~/Pictures'
+alias cV='cd ~/Videos'
+
+alias cd='cd_to_directory'
+alias md='mkdir'    #make directory
+alias tc='touch'    #creat file
+
+alias r='fn_removal' #remove both file & direvtory ( one file / directory at a time )
+
+# check updates for opensuse.
+alias cu='fn_check_updates'
+alias dup='sudo zypper dup'
+
+# updates
+alias up='fn_update'        # opensuse & fedora
+alias upO='fn_update main'  # for arch
+alias upA='fn_update aur'   # for arch
+
+# install software
+alias in='fn_install'
+alias inO='fn_install main' # these are for Arch Linux
+alias inA='fn_install aur'  # these are for Arch Linux
+
+# uninstall
+alias un='fn_uninstall'
+alias unO='fn_uninstall main'   # for arch
+alias unA='fn_uninstall aur'    # for arch
+
+
+# git alias
+alias gc='git clone'
+alias gcd='git clone --depth=1'
+alias gbm='git branch -M main'
+alias gcm='git commit -m'
+alias gp='git push'
+alias gpu='git push -u origin main'
+alias gpl='git pull'
+
+# others
+alias nc='clr && neofetch' # neofetch
+alias neofetch='clr && neofetch'
+alias sys='btop'
+
+
+# make executable script
+alias exe='chmod +x'
