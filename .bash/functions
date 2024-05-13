@@ -17,6 +17,8 @@ cd_to_directory() {
     fi
 }
 
+
+# extract files
 ex () {
   if [ -f $1 ] ; then
     case $1 in
@@ -137,4 +139,47 @@ fn_uninstall() {
         echo "Unsupported distribution."
         return 1
     fi
+}
+
+
+# git function ( experimantal )
+# function git_info() {
+#   # Check if current directory is a Git repository
+#   if ! git rev-parse --is-inside-work-tree >/dev/null; then
+#     return 0
+#   fi
+
+#   # Get the current branch name
+#   branch_name=$(git branch --show-current 2>/dev/null)
+
+#   # Get the number of unpushed commits (using wc)
+#   unpushed_count=$(git log --pretty=oneline | wc -l 2>/dev/null || echo 0)
+
+#   # Print information
+#   if [[ -n "$branch_name"  ]]; then
+#     printf "\e[1;32m$branch_name\e[1;0m  "  # Branch name in blue
+#     if [[ "$unpushed_count" -gt 0 ]]; then
+#       printf "\e[1;33m$unpushed_count\e[1;0m\n"  # Unpushed count in yellow
+#     fi
+#   fi
+# }
+
+git_info() {
+  # Check if current directory is a Git repository
+  if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    # Get the current branch name
+    branch_name=$(git branch --show-current 2>/dev/null)
+
+    # Get the number of unpushed commits (using wc)
+    unpushed_count=$(git log --pretty=oneline | wc -l 2>/dev/null || echo 0)
+
+    # Print information
+    if [[ -n "$branch_name"  ]]; then
+      printf "\n\x1b[38;5;46m  $branch_name\e[1;0m \u001b[35;1m  \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+
+      if [[ "$unpushed_count" -gt 0 ]]; then
+        printf " \x1b[38;5;214m($unpushed_count) \e[3;0m\n"  # Unpushed count in yellow
+      fi
+    fi
+  fi
 }

@@ -19,7 +19,20 @@ source ~/.bash/alias
 # end="\e[1;0m"
 
 
-PS1='┌─[\e[1;32m \w\e[1;0m ]\n└──|> '
+# PS1='┌─[\e[1;32m \w\e[1;0m ]\n└──|> '
+
+PS1='┌─[\e[1;33m \w\e[1;0m $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo '')]\n└─|> '
+
+# PS1='┌─[\[\e[1;32m\]\w\[\e[0m\]]\n'  # Base prompt
+
+# if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+#   PS1+='└─[ $(git_info) ]> '  # Call git_info function using command substitution
+# else
+#   PS1+='└──|> '  # Default prompt if not a Git repository
+# fi
+
+
+
 
 
 # User specific environment

@@ -16,7 +16,7 @@ alias l.="ls -A | egrep '^\.'"
 alias ex='ex'
 
 # other
-alias rc='source ~/.bashrc && clr && nc' #source .bashrc
+alias src='source ~/.bash/.bashrc' #source .bashrc
 alias clr='clear'   #clear
 
 # change directory & directory related
@@ -58,6 +58,7 @@ alias gcm='git commit -m'
 alias gp='git push'
 alias gpu='git push -u origin main'
 alias gpl='git pull'
+alias ginfo='git_info'
 
 # others
 alias nc='clr && neofetch' # neofetch
