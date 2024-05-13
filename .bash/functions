@@ -115,6 +115,8 @@ fn_install() {
         sudo dnf install -y "$@"
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper in "$@"
+    elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
+    	sudo apt install "$@"
     else
         echo "Unsupported distribution."
         return 1
@@ -135,6 +137,8 @@ fn_uninstall() {
         sudo dnf remove "$@"
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper rm "$@"
+    elif [ -n "$(command -v apt)" ]; then	# ubunt or related
+    	sudo apt remove "$@"
     else
         echo "Unsupported distribution."
         return 1
