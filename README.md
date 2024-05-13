@@ -2,9 +2,9 @@
 
 ### Here are some screen shos
 <hr>
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/ScreenShots/1.png?raw=true" /> </p>
+<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/1.png?raw=true" /> </p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/ScreenShots/3.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bashblob/main/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/3.png?raw=true" /></p>
 
 
 <br>
