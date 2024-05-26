@@ -8,6 +8,23 @@
 
 <p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/4.png?raw=true" /> </p>
 
+<br>
+
+### Some Info
+<h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for:
+1) Arch
+2) ArcoLinux
+3) Manjaro
+4) Garuda
+5) Ubuntu
+6) Debian
+7) Linux Mint
+8) Zorin Os
+9) Pop Os!
+10) Kali Linux
+11) Parrot Os
+12) Fedora
+13) OpenSuse</h4>
 
 <br>
 

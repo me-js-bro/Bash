@@ -32,18 +32,15 @@ alias r='fn_removal' #remove both file & direvtory ( one file / directory at a t
 
 # check updates for opensuse.
 alias cu='fn_check_updates'
-alias cuo='fn_check_updates main'
-alias cua='fn_check_updates aur'
-
-alias dup='sudo zypper dup' # for zypper only
+alias dup='sudo zypper dup' # only for opensuse
 
 # updates
-alias up='fn_update'        # opensuse, fedora and ubuntu / debian
+alias up='fn_update'        # opensuse & fedora
 alias upo='fn_update main'  # for arch
 alias upa='fn_update aur'   # for arch
 
 # install software
-alias in='fn_install'   # not for Arch Linux
+alias in='fn_install'
 alias ino='fn_install main' # these are for Arch Linux
 alias ina='fn_install aur'  # these are for Arch Linux
 
