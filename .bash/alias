@@ -32,22 +32,25 @@ alias r='fn_removal' #remove both file & direvtory ( one file / directory at a t
 
 # check updates for opensuse.
 alias cu='fn_check_updates'
-alias dup='sudo zypper dup'
+alias cuo='fn_check_updates main'
+alias cua='fn_check_updates aur'
+
+alias dup='sudo zypper dup' # for zypper only
 
 # updates
-alias up='fn_update'        # opensuse & fedora
-alias upO='fn_update main'  # for arch
-alias upA='fn_update aur'   # for arch
+alias up='fn_update'        # opensuse, fedora and ubuntu / debian
+alias upo='fn_update main'  # for arch
+alias upa='fn_update aur'   # for arch
 
 # install software
-alias in='fn_install'
-alias inO='fn_install main' # these are for Arch Linux
-alias inA='fn_install aur'  # these are for Arch Linux
+alias in='fn_install'   # not for Arch Linux
+alias ino='fn_install main' # these are for Arch Linux
+alias ina='fn_install aur'  # these are for Arch Linux
 
 # uninstall
 alias un='fn_uninstall'
-alias unO='fn_uninstall main'   # for arch
-alias unA='fn_uninstall aur'    # for arch
+alias uno='fn_uninstall main'   # for arch
+alias una='fn_uninstall aur'    # for arch
 
 
 # git alias
@@ -57,6 +60,7 @@ alias gbm='git branch -M main'
 alias gcm='git commit -m'
 alias gp='git push'
 alias gpu='git push -u origin main'
+alias gpo='git push origin'
 alias gpl='git pull'
 alias ginfo='git_info'
 
