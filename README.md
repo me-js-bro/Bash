@@ -13,22 +13,22 @@
 <br>
 
 ## Some Info
-<h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for:
-1) Arch
-2) ArcoLinux
-3) Manjaro
-4) Garuda
-5) Ubuntu
-6) Debian
-7) Linux Mint
-8) Zorin Os
-9) Pop Os!
-10) Kali Linux
-11) Parrot Os
-12) Fedora
-13) OpenSuse</h4>
-
+<h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for: 
 <br>
+<br>
+1) Arch <br>
+2) ArcoLinux <br>
+3) Manjaro <br>
+4) Garuda <br>
+5) Ubuntu <br>
+6) Debian <br>
+7) Linux Mint <br>
+8) Zorin Os <br>
+9) Pop Os! <br>
+10) Kali Linux <br>
+11) Parrot Os <br>
+12) Fedora <br>
+13) OpenSuse</h4> <br>
 
 ## Before Installation
 #### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the JetBrains Mono Nerd font. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your terminal.
