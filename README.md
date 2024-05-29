@@ -1,7 +1,9 @@
 <h1 align='center'>My personl Bash Customization</h1>
 
-### Here are some screen shos
-<hr>
+<br>
+
+## Here are some screenshos
+
 <p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/1.png?raw=true" /> </p>
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/3.png?raw=true" /></p>
@@ -10,7 +12,7 @@
 
 <br>
 
-### Some Info
+## Some Info
 <h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for:
 1) Arch
 2) ArcoLinux
@@ -28,6 +30,11 @@
 
 <br>
 
+## Before Installation
+#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the JetBrains Mono Nerd font. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your terminal.
+<br>
+
+## Installation
 ### Clone this repository to install my bash configs.
 ```
 git clone --depth=1 https://github.com/me-js-bro/Bash.git
@@ -41,37 +48,45 @@ chmod +x install.sh
 ./install.sh
 ```
 
-### Some shortcut commands
-<hr>
 
-#### 1) Directory and file Related:
-- cd =  cd </br>
-- cD = cd ~/Downloads </br>
-- cP = cd ~/Pictures </br>
-- cV = cd ~/Videos </br>
-- cd = cd into the new directory, if does not exist, </br> it will ask to create the directory. </br>
-- md = mkdir  ( make a directory ) </br>
-- tc = touch   ( create a file ) </br>
-- r = remove [ both file and folder ] </br>
+## Command Shortcuts
 
+### 1) Directory Navigation and File Management
 
-#### 2) Updated install/uninstall related:
-- cu = checks system updates ( Fedora, OpenSuse ) </br>
-- up = Updates the system packages. ( Fedora, OpenSuse, Debian/Ubuntu ) </br>
-- upo = updates the official repo. ( Arch ) </br>
-- upa = updates the aur helper ( Arch ) </br>
-- in = install package ( Fedora, OpenSuse, Debian/Ubuntu ) </br>
-- un = uninstall package ( Fedora, OpenSuse, Debian/Ubuntu ) </br>
-- uno = unstall from main repo ( Arch ) </br>
-- una = uninstall from the aur helper ( Arch ) </br>
+| Shortcut | Command | Description |
+|----------|---------|-------------|
+| `cd`     | `cd`    | Change directory. If the directory does not exist, it will ask to create it. |
+| `cD`     | `cd ~/Downloads` | Change to the Downloads directory. |
+| `cP`     | `cd ~/Pictures`  | Change to the Pictures directory. |
+| `cV`     | `cd ~/Videos`    | Change to the Videos directory. |
+| `md`     | `mkdir`          | Make a directory. |
+| `tc`     | `touch`          | Create a file. |
+| `r`      | `rm -rf`         | Remove both files and directories. |
 
-#### 3) git related
-- gc = git clone </br>
-- gcd = git clone --depth=1 </br>
-- gcm = git commit -m </br>
-- gbm = git branch -M main </br>
-- gp = git push </br>
-- gpu = git push -u origin main </br>
-- gpo = git push origin [ write your branch name ]
+### 2) Updated Install/Uninstall Related
 
-<br>
+| Shortcut | Command | Description |
+|----------|---------|-------------|
+| `cu`     | `dnf check-update` or `zypper list-updates` | Checks system updates (Fedora, OpenSuse). |
+| `cuo`    | `checkupdates` | Checks system updates (Arch Official). |
+| `cua`    | `"$aur" -Qua` | Checks system updates (Arch Aur). |
+| `up`     | `dnf upgrade`, `zypper update`, or `apt-get update` | Updates the system packages (Fedora, OpenSuse, Debian/Ubuntu). |
+| `upo`    | `pacman -Syu`     | Updates the official repo (Arch). |
+| `upa`    | `yay -Syu`        | Updates the AUR helper (Arch). |
+| `in`     | `dnf install`, `zypper install`, or `apt-get install` | Install package (Fedora, OpenSuse, Debian/Ubuntu). |
+| `un`     | `dnf remove`, `zypper remove`, or `apt-get remove` | Uninstall package (Fedora, OpenSuse, Debian/Ubuntu). |
+| `uno`    | `pacman -R`       | Uninstall from main repo (Arch). |
+| `una`    | `yay -R`          | Uninstall from the AUR helper (Arch). |
+
+### 3) Git Related
+
+| Shortcut | Command | Description |
+|----------|---------|-------------|
+| `gc`     | `git clone`         | Clone a repository. |
+| `gcd`    | `git clone --depth=1` | Clone a repository with depth 1. |
+| `gcm`    | `git commit -m`     | Commit with a message. |
+| `gp`     | `git push`          | Push changes to the remote repository. |
+| `gpu`    | `git push -u origin main` | Push changes and set upstream to main. |
+| `gpo`    | `git push origin [branch]` | Push to a specified branch. |
+
+### Feel free to add your own shortcuts into the `~/.bash/alias` file, and functions into the `~/.bash/functions` file

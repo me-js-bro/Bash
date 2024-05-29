@@ -32,12 +32,14 @@ alias r='fn_removal' #remove both file & direvtory ( one file / directory at a t
 
 # check updates for opensuse.
 alias cu='fn_check_updates'
-alias dup='sudo zypper dup' # only for opensuse
+alias cuo='fn_check_updates main'
+alias cua='fn_check_updates aur'
 
 # updates
 alias up='fn_update'        # opensuse, fedora & ubuntu / debian
 alias upo='fn_update main'  # for arch
 alias upa='fn_update aur'   # for arch
+alias dup='sudo zypper dup' # only for opensuse
 
 # install software
 alias in='fn_install'
