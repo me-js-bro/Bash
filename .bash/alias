@@ -35,7 +35,7 @@ alias cu='fn_check_updates'
 alias dup='sudo zypper dup' # only for opensuse
 
 # updates
-alias up='fn_update'        # opensuse & fedora
+alias up='fn_update'        # opensuse, fedora & ubuntu / debian
 alias upo='fn_update main'  # for arch
 alias upa='fn_update aur'   # for arch
 

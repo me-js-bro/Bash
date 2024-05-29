@@ -92,6 +92,8 @@ fn_update() {
         sudo dnf update -y && sudo dnf upgrade -y --refresh
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper up -y && sudo zypper ref
+    elif [ -n "$(command -v apt)" ]; then   # ubuntu / debian
+        sudo apt update && sudo apt upgrade -y
     else
         printf "Unsupported distribution."
         return 1
