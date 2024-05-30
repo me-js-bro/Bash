@@ -16,7 +16,7 @@
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-2.png?raw=true" /></p>
 
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4.png?raw=true" /> </p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4-1.png?raw=true" /> </p>
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-3.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-5.png?raw=true" /></p>
 
@@ -58,6 +58,8 @@ chmod +x install.sh
 ./install.sh
 ```
 
+## Edit alias & functions
+#### Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go.
 
 ## Command Shortcuts
 
@@ -98,5 +100,11 @@ chmod +x install.sh
 | `gp`     | `git push`          | Push changes to the remote repository. |
 | `gpu`    | `git push -u origin main` | Push changes and set upstream to main. |
 | `gpo`    | `git push origin [branch]` | Push to a specified branch. |
+
+### 4) Changing Style
+
+| Shortcut | Command | Description |
+|----------|---------|-------------|
+| `style`  | `bash ~/.bash/change_prompt.sh` | Execute a script that changes the style of the bash |
 
 ### Feel free to add your own shortcuts into the `~/.bash/alias` file, and functions into the `~/.bash/functions` file
