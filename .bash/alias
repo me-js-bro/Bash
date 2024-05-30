@@ -30,16 +30,14 @@ alias tc='touch'    #creat file
 
 alias r='fn_removal' #remove both file & direvtory ( one file / directory at a time )
 
-# check updates for opensuse.
+# check updates
 alias cu='fn_check_updates'
-alias cuo='fn_check_updates main'
-alias cua='fn_check_updates aur'
 
 # updates
-alias up='fn_update'        # opensuse, fedora & ubuntu / debian
+alias dup='sudo zypper dup' # distro update for opensuse
+alias up='fn_update'        # opensuse & fedora
 alias upo='fn_update main'  # for arch
 alias upa='fn_update aur'   # for arch
-alias dup='sudo zypper dup' # only for opensuse
 
 # install software
 alias in='fn_install'
@@ -59,7 +57,7 @@ alias gbm='git branch -M main'
 alias gcm='git commit -m'
 alias gp='git push'
 alias gpu='git push -u origin main'
-alias gpo='git push origin'
+alias gpo='git push origin' # and add your branch name 
 alias gpl='git pull'
 alias ginfo='git_info'
 
@@ -71,3 +69,7 @@ alias sys='btop'
 
 # make executable script
 alias exe='chmod +x'
+
+
+# change style
+alias style='bash ~/.bash/change_prompt.sh'

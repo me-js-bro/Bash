@@ -92,8 +92,6 @@ fn_update() {
         sudo dnf update -y && sudo dnf upgrade -y --refresh
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper up -y && sudo zypper ref
-    elif [ -n "$(command -v apt)" ]; then   # ubuntu / debian
-        sudo apt update && sudo apt upgrade -y
     else
         printf "Unsupported distribution."
         return 1
@@ -169,7 +167,7 @@ git_info() {
   fi
 }
 
-# check which distro and print the distros logo ( I checked it in OpenSuse, Fedora, Arch. and it worked in these distros. )
+# check which distro
 check_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -215,7 +213,7 @@ check_distro() {
                     printf "\e[38;5;47m \e[1;0m\n"
                     ;;
                 *)
-                    printf "\n"
+                    printf "\e[1;36m\e[1;0m\n"
                     ;;
             esac
         fi

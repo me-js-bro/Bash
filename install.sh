@@ -60,10 +60,11 @@ done
 printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
 
 # check if there is a .bash directory available. if available, then backup it.
-if [ -d ~/.bash ]; then
+if [[ -d ~/.bash && -f ~/.bashrc]]; then
     printf "${note} - A ${green}.bash${end} directory is available... Backing it up\n" && sleep 1
 
     cp -r ~/.bash ~/.bash-back
+    cp ~/.bashrc ~/.bashrc-back-mail
     printf "${done} - Backup done..\n \n"
 fi
 
@@ -88,6 +89,10 @@ if [ -d ~/.bash ]; then
         echo "ble-face -s syntax_default fg=1" >> ~/.blerc
     fi
 fi
+
+sleep 1
+
+chmod +x ~/.bash/change_prompt.sh
 
 source ~/.blerc
 

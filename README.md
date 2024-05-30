@@ -12,6 +12,16 @@
 
 <br>
 
+## Styles
+
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-2.png?raw=true" /></p>
+
+<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4.png?raw=true" /> </p>
+
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-3.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-5.png?raw=true" /></p>
+
+<br>
+
 ## Some Info
 <h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for: 
 <br>
