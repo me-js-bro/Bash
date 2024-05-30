@@ -4,21 +4,21 @@
 
 ## Here are some screenshos
 
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/1.png?raw=true" /> </p>
+<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/1.png?raw=true" /> </p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/3.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/3.png?raw=true" /></p>
 
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/4.png?raw=true" /> </p>
+<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/4.png?raw=true" /> </p>
 
 <br>
 
 ## Styles
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-2.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-2.png?raw=true" /></p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-4-1.png?raw=true" /> </p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-4.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-4-1.png?raw=true" /> </p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-3.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Bash/blob/main/ScreenShots/Styles/style-5.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-3.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/tree/main/bash/ScreenShots/Styles/style-5.png?raw=true" /></p>
 
 <br>
 
