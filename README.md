@@ -1,5 +1,9 @@
 <h1 align='center'>My personl Bash Customization</h1>
 
+
+## Short Description
+#### Those who don't want to install and configure any other shell like the `zsh` and the `fish` shell, want to stay in the default `bash`, also want to make the experience of the bash more easy, can easily install this configuration. Just simply run the `install.sh` script. It will install some necessary packages and a github repo. And then you can enjoy the configuration.
+
 <br>
 
 ## Here are some screenshos
@@ -41,7 +45,19 @@
 13) OpenSuse</h4> <br>
 
 ## Before Installation
-#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the JetBrains Mono Nerd font. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your terminal.
+#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the JetBrains Mono Nerd font. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
+<br>
+
+## Features
+<h3> 
+1) Shortcuts <br>
+2) Some functions for install, uninstall, check updates, update packages and so on <br>
+3) Syntax Highlighting <br>
+4) Auto Suggestions <br>
+5) Git branch name and left commits <br>
+6) Some cool looking themes <br>
+</h3>
+
 <br>
 
 ## Installation
@@ -60,6 +76,8 @@ chmod +x install.sh
 
 ## Edit alias & functions
 #### Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go.
+
+<br>
 
 ## Command Shortcuts
 

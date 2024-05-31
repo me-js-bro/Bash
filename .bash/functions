@@ -158,10 +158,10 @@ git_info() {
 
     # Print information
     if [[ -n "$branch_name"  ]]; then
-      printf "\n\x1b[38;5;46m  $branch_name\e[1;0m \u001b[35;1m  \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+      printf "\x1b[38;5;46m $branch_name \e[1;0m \u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
 
       if [[ "$unpushed_count" -gt 0 ]]; then
-        printf " \x1b[38;5;214m($unpushed_count) \e[3;0m\n"  # Unpushed count in yellow
+        printf "\x1b[38;5;214m($unpushed_count) \e[3;0m\n"  # Unpushed count in orange
       fi
     fi
   fi
@@ -199,9 +199,6 @@ check_distro() {
                     ;;
                 manjaro)
                     printf "\e[38;5;47m\e[1;0m\n"
-                    ;;
-                garuda)
-                    printf "\e[38;5;208m\e[1;0m\n"
                     ;;
                 arcolinux)
                     printf "\e[38;5;81m\e[1;0m\n"

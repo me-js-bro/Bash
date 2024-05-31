@@ -3,11 +3,13 @@
 # Function to display the menu
 display_menu() {
     echo "Select a prompt style:"
-    echo "1) Style 1 (2 lines)"
-    echo "2) Style 2 (one line)"
-    echo "3) Style 3 (2 lines)"
-    echo "4) Style 4 (2 lines for git info) (Default)"
-    echo "5) Style 5 (like zsh)"
+    echo "1) Style 1 ( 2 lines )"
+    echo "2) Style 2 ( one line )"
+    echo "3) Style 3 ( 2 lines )"
+    echo "4) Style 4 ( 2nd line for git info ) (Default)"
+    echo "5) Style 5 ( like zsh )"
+    echo "6) Style 6 ( like Garuda Fish )"
+    echo "7) Style 7 ( BG Colored )"
     echo "q) Quit"
 }
 
@@ -15,6 +17,7 @@ display_menu
 read -n1 -rep "Choose Your style: " style
 
 # case to choose the PS1 variable
+# everything you see "\e[..." are just colors...
 case $style in
     1)
         PS1='┌( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo " \w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")]\n└─ $(check_distro)|> '
@@ -26,10 +29,16 @@ case $style in
         PS1='\n$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m" $(check_distro); elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo " \w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n \e[1;32m\e[1;0m '
         ;;
     4)
-        PS1='$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "") \n $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m󰜥\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\W"; fi) \e[1;32m\e[1;0m ' 
+        PS1='\n$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "") \n $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m󰜥\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\W"; fi) \e[1;32m\e[1;0m ' 
         ;;
     5)
-        PS1=' $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;36m╭─\e[1;0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m  $(check_distro)\e"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\e[1;33m \w"; fi) \n\e[1;36m╰──\e[1;32m❯\e[1;0m '
+        PS1='\n$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;36m╭─\e[1;0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m  $(check_distro)\e"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\e[1;33m\w"; fi) \n\e[1;36m╰──\e[1;32m❯\e[1;0m '
+        ;;
+    6)
+        PS1='\n\e[1;36m╭─ \e[1;37m\u\e[1;34m@\e[1;37m\h\e[1;0m in $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m󰜥"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\e[1;33m\W"; fi)$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;36m╰──\e[1;32m󰘧\e[1;0m '
+        ;;
+    7)
+        PS1='\e[44m \u \e[1;0m\e[103m\e[1;30m \w \e[1;0m\e[100m$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\e[1;0m \$ '
         ;;
     q)
         echo "Quitting..."

@@ -4,13 +4,22 @@ source ~/.bash/functions
 # Custom LS_COLORS
 LS_COLORS='di=36:fi=33:*.sh=32:*.*=35'
 
-alias ls='ls --color=auto --group-directories-first'
-alias la='ls -a'
-alias lsf='ls --color=auto --file-type'
-alias lsh='ls --color=auto --almost-all'
-alias ll='ls -alFh'
-alias l='ls'
-alias l.="ls -A | egrep '^\.'"
+alias ls='lsd --color=always --group-directories-first'     # preferred listing
+alias la='lsd -a --color=always --group-directories-first'     # preferred listing
+alias lsa='lsd -all --color=always --group-directories-first'      # all files and dirs
+alias ll='ls -l --color=always --group-directories-first'      # directories
+alias l.='ls -ald --color=always --group-directories-first .*' # show only dotfiles
+
+alias cat='bat --style header --style snip --style changes --style header'  # cat
+
+alias grubup="sudo update-grub" # most other distros like Arch, Ubuntu
+alias susegrub="sudo grub2-mkconfig -o /boot/grub2/grub.cfg"    # opensuse
+alias fedbup="sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg" # fedora
+alias ..='cd ..'    # go back
+alias ...='cd ../..'    # go back 2 steps
+alias .='cd /'  # go to root dir
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
 
 # extract files
 alias ex='ex'
