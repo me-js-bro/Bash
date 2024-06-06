@@ -1,3 +1,5 @@
+# ~/.bash/functions
+
 # Function to check if directory exists and change to it
 cd_to_directory() {
     local directory="$1"
@@ -158,10 +160,12 @@ git_info() {
 
     # Print information
     if [[ -n "$branch_name"  ]]; then
-      printf "\x1b[38;5;46m $branch_name \e[1;0m \u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+      printf "\e[1;37m \x1b[38;5;46m $branch_name \e[1;0m \u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
 
       if [[ "$unpushed_count" -gt 0 ]]; then
         printf "\x1b[38;5;214m($unpushed_count) \e[3;0m\n"  # Unpushed count in orange
+      else
+        printf "\e[1;32m✓ \e[3;0m\n"  # shows an icon
       fi
     fi
   fi
@@ -218,3 +222,38 @@ check_distro() {
         printf "\n"
     fi
 }
+
+
+# Function to capture the start time
+preexec() {
+    export command_start_time=$(date +%s)
+}
+
+# Function to capture the end time and calculate elapsed time
+precmd() {
+    if [[ -n $command_start_time && $command_start_time -ne 0 ]]; then
+        local command_end_time=$(date +%s)
+        local elapsed_time=$((command_end_time - command_start_time))
+
+        # Convert elapsed time to hours, minutes, and seconds
+        local hours=$((elapsed_time / 3600))
+        local minutes=$(( (elapsed_time % 3600) / 60 ))
+        local seconds=$((elapsed_time % 60))
+
+        # Only display elapsed time if it is greater than zero
+        if [[ $elapsed_time -gt 0 ]]; then
+            export elapsed_time_display=$(printf "\nExecution time: %02d:%02d:%02d" $hours $minutes $seconds)
+        else
+            export elapsed_time_display=""
+        fi
+    else
+        export elapsed_time_display=""
+    fi
+    export command_start_time=0  # Reset start time to 0 after each command
+}
+
+# Function to capture the current time
+current_time() {
+    echo $(date +%I:%M\ %p)
+}
+

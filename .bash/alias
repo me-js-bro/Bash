@@ -1,3 +1,5 @@
+# ~/.bash/alias
+
 source ~/.bash/functions
 
 ## list ##
@@ -27,6 +29,7 @@ alias ex='ex'
 # other
 alias src='source ~/.bash/.bashrc' #source .bashrc
 alias clr='clear'   #clear
+alias cls='clear'
 
 # change directory & directory related
 alias cD='cd ~/Downloads'
@@ -60,19 +63,21 @@ alias una='fn_uninstall aur'    # for arch
 
 
 # git alias
-alias gc='git clone'
-alias gcd='git clone --depth=1'
-alias gbm='git branch -M main'
-alias gcm='git commit -m'
-alias gp='git push'
-alias gpu='git push -u origin main'
-alias gpo='git push origin' # and add your branch name 
-alias gpl='git pull'
-alias ginfo='git_info'
+alias add='git add .'
+alias clone='git clone'
+alias cloned='git clone --depth=1'
+alias branch='git branch -M main'
+alias commit='git commit -m'
+alias push='git push'
+alias pushm='git push -u origin main'
+alias pusho='git push origin' # and add your branch name 
+alias pull='git pull'
+alias info='git_info'
 
 # others
 alias nc='clr && neofetch' # neofetch
 alias neofetch='clr && neofetch'
+alias nitch='clr && nitch'
 alias sys='btop'
 
 

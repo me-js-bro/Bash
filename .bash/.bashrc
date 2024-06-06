@@ -1,4 +1,5 @@
-# .bashrc
+# ~/.bash/.bashrc
+
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -28,8 +29,11 @@ fi
 source ~/.bash/functions
 source ~/.bash/alias
 
+PROMPT_COMMAND='precmd; preexec'
+
 # Set prompt
-PS1='\n$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "") \n $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m󰜥\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\W"; fi) \e[1;32m\e[1;0m '
+PS1='\e[90m${elapsed_time_display}\e[0m\n╭( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo "\e[1;33m \W\e[1;0m"; fi) ]$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo ──{ $(git_info) }─ || echo "")─( $(current_time) )\n╰─\e[1;32m❯\e[1;0m '
+
 
 
 # User specific environment
@@ -51,5 +55,10 @@ fi
 bind "set completion-ignore-case on"
 
 unset rc
-neofetch
+neofetch | lolcat
 source ~/.local/share/blesh/ble.sh
+source ~/.local/share/blesh/ble.sh
+
+# figlet "fedora" | lolcat
+# figlet -f slant "Fedora" | lolcat
+# source ~/.bash/logo.sh | lolcat 

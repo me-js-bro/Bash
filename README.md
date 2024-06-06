@@ -2,7 +2,7 @@
 
 
 ## Short Description
-#### Those who don't want to install and configure any other shell like the `zsh` and the `fish` shell, want to stay in the default `bash`, also want to make the experience of the bash more easy, can easily install this configuration. Just simply run the `install.sh` script. It will install some necessary packages and a github repo. And then you can enjoy the configuration.
+#### Those who don't want to install and configure any other shell like the `zsh` or the `fish` shell, want to stay in the default `bash`, also want to make the experience of the bash more easy, can easily install this configuration. Just simply run the `install.sh` script. It will install some necessary packages and a github repo. And then you can enjoy the configuration.
 
 <br>
 
@@ -12,17 +12,13 @@
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/3.png?raw=true" /></p>
 
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/4.png?raw=true" /> </p>
-
 <br>
 
 ## Styles
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-2.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4.png?raw=true" /></p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4-1.png?raw=true" /> </p>
-
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-3.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-5.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-5.png?raw=true" /> </p>
 
 <br>
 
@@ -33,19 +29,18 @@
 1) Arch <br>
 2) ArcoLinux <br>
 3) Manjaro <br>
-4) Garuda <br>
-5) Ubuntu <br>
-6) Debian <br>
-7) Linux Mint <br>
-8) Zorin Os <br>
-9) Pop Os! <br>
-10) Kali Linux <br>
-11) Parrot Os <br>
-12) Fedora <br>
-13) OpenSuse</h4> <br>
+4) Ubuntu <br>
+5) Debian <br>
+6) Linux Mint <br>
+7) Zorin Os <br>
+8) Pop Os! <br>
+9) Kali Linux <br>
+10) Parrot Os <br>
+11) Fedora <br>
+12) OpenSuse</h4> <br>
 
 ## Before Installation
-#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the JetBrains Mono Nerd font. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
+#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the `JetBrains Mono Nerd Font`. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
 <br>
 
 ## Features
@@ -75,7 +70,7 @@ chmod +x install.sh
 ```
 
 ## Edit alias & functions
-#### Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go.
+#### Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go. Also if you want to add your custom bash prompt, just go to `~/.bash/change_prompt.sh` file and add your prompt.
 
 <br>
 
@@ -112,17 +107,16 @@ chmod +x install.sh
 
 | Shortcut | Command | Description |
 |----------|---------|-------------|
-| `gc`     | `git clone`         | Clone a repository. |
-| `gcd`    | `git clone --depth=1` | Clone a repository with depth 1. |
-| `gcm`    | `git commit -m`     | Commit with a message. |
-| `gp`     | `git push`          | Push changes to the remote repository. |
-| `gpu`    | `git push -u origin main` | Push changes and set upstream to main. |
-| `gpo`    | `git push origin [branch]` | Push to a specified branch. |
+| `add`     | `git add .`         | Add. |
+| `clone`     | `git clone`         | Clone a repository. |
+| `cloned`    | `git clone --depth=1` | Clone a repository with depth 1. |
+| `commit`    | `git commit -m`     | Commit with a message. |
+| `push`     | `git push`          | Push changes to the remote repository. |
+| `pushm`    | `git push -u origin main` | Push changes and set upstream to main. |
+| `pusho`    | `git push origin [branch]` | Push to a specified branch. |
 
 ### 4) Changing Style
 
 | Shortcut | Command | Description |
 |----------|---------|-------------|
 | `style`  | `bash ~/.bash/change_prompt.sh` | Execute a script that changes the style of the bash |
-
-### Feel free to add your own shortcuts into the `~/.bash/alias` file, and functions into the `~/.bash/functions` file
