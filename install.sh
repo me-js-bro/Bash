@@ -102,7 +102,6 @@ if [ -d ~/.bash ]; then
 
     curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - 2>&1 | tee -a "$log"
     bash ble-nightly/ble.sh --install ~/.local/share 2>&1 | tee -a "$log"
-    echo 'source ~/.local/share/blesh/ble.sh' >> ~/.bash/.bashrc 2>&1 | tee -a "$log"
 
     if [ -f ~/.blerc ]; then
         printf "${action} - Backing up ~/.blerc file \n"

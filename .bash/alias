@@ -51,6 +51,13 @@ alias up='fn_update'        # opensuse & fedora
 alias upo='fn_update main'  # for arch
 alias upa='fn_update aur'   # for arch
 
+# open configs
+alias hypr='code ~/.config/hypr'
+alias bar='code ~/.config/hypr/waybar'
+alias scripts='code ~/.config/hypr/scripts'
+alias bash='code ~/.bash'
+alias config='code /main/Codes/js-bro/Hyprland-Dots-01'
+
 # install software
 alias in='fn_install'
 alias ino='fn_install main' # these are for Arch Linux

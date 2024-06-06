@@ -55,8 +55,8 @@ fi
 bind "set completion-ignore-case on"
 
 unset rc
-neofetch | lolcat
-source ~/.local/share/blesh/ble.sh
+neofetch
+# neofetch | lolcat
 source ~/.local/share/blesh/ble.sh
 
 # figlet "fedora" | lolcat
