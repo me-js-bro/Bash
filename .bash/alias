@@ -47,26 +47,25 @@ alias cu='fn_check_updates'
 
 # updates
 alias dup='sudo zypper dup' # distro update for opensuse
-alias up='fn_update'        # opensuse & fedora
-alias upo='fn_update main'  # for arch
-alias upa='fn_update aur'   # for arch
+alias update='fn_update'        # opensuse & fedora
+alias updateO='fn_update main'  # for arch
+alias updateA='fn_update aur'   # for arch
 
 # open configs
 alias hypr='code ~/.config/hypr'
-alias bar='code ~/.config/hypr/waybar'
+alias bar='code ~/.config/waybar'
 alias scripts='code ~/.config/hypr/scripts'
 alias bash='code ~/.bash'
-alias config='code /main/Codes/js-bro/Hyprland-Dots-01'
 
 # install software
-alias in='fn_install'
-alias ino='fn_install main' # these are for Arch Linux
-alias ina='fn_install aur'  # these are for Arch Linux
+alias install='fn_install'
+alias installO='fn_install main' # these are for Arch Linux
+alias installA='fn_install aur'  # these are for Arch Linux
 
 # uninstall
-alias un='fn_uninstall'
-alias uno='fn_uninstall main'   # for arch
-alias una='fn_uninstall aur'    # for arch
+alias remove='fn_uninstall'
+alias removeO='fn_uninstall main'   # for arch
+alias removeA='fn_uninstall aur'    # for arch
 
 
 # git alias

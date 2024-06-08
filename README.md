@@ -88,20 +88,20 @@ chmod +x install.sh
 | `tc`     | `touch`          | Create a file. |
 | `r`      | `rm -rf`         | Remove both files and directories. |
 
-### 2) Updated Install/Uninstall Related
+### 2) Updated, Install & Uninstall Related
 
 | Shortcut | Command | Description |
 |----------|---------|-------------|
-| `cu`     | `dnf check-update` or `zypper list-updates` | Checks system updates (Fedora, OpenSuse). |
-| `cuo`    | `checkupdates` | Checks system updates (Arch Official). |
-| `cua`    | `"$aur" -Qua` | Checks system updates (Arch Aur). |
-| `up`     | `dnf upgrade`, `zypper update`, or `apt-get update` | Updates the system packages (Fedora, OpenSuse, Debian/Ubuntu). |
-| `upo`    | `pacman -Syu`     | Updates the official repo (Arch). |
-| `upa`    | `yay -Syu`        | Updates the AUR helper (Arch). |
-| `in`     | `dnf install`, `zypper install`, or `apt-get install` | Install package (Fedora, OpenSuse, Debian/Ubuntu). |
-| `un`     | `dnf remove`, `zypper remove`, or `apt-get remove` | Uninstall package (Fedora, OpenSuse, Debian/Ubuntu). |
-| `uno`    | `pacman -R`       | Uninstall from main repo (Arch). |
-| `una`    | `yay -R`          | Uninstall from the AUR helper (Arch). |
+| `cu`     | `sudo dnf check-update` or `sudo zypper list-updates`  | Checks system updates (Fedora, OpenSuse. Also prints both Official and Aur updates in Arch Linux). |
+| `update`     | `sudo dnf upgrade`, `sudo zypper update`, or `sudo apt-get update` | Updates the system packages (Fedora, OpenSuse, Debian/Ubuntu). |
+| `updateO`    | `sudo pacman -Syu`     | Updates the official repo (Arch). |
+| `updateA`    | `yay/paru -Syu`        | Updates the AUR helper (Arch). |
+| `install`     | `sudo dnf install`, `zypper install`, or `apt-get install` | Install package (Fedora, OpenSuse, Debian/Ubuntu). |
+| `installO`    | `sudo pacman -S`    | Install from official Packan repo |
+| `installA`    | `yay/paru -S`     | Install from Arch User Repository (aur) |
+| `remove`     | `sduo dnf remove`, `sudo zypper remove`, or `sudo apt-get remove` | Uninstall package (Fedora, OpenSuse, Debian/Ubuntu). |
+| `removeO`    | `sudo pacman -R`       | Uninstall from main repo (Arch). |
+| `removeA`    | `yay -R`          | Uninstall from the AUR helper (Arch). |
 
 ### 3) Git Related
 
