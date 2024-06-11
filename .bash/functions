@@ -269,14 +269,17 @@ precmd() {
         local command_end_time=$(date +%s)
         local elapsed_time=$((command_end_time - command_start_time))
 
-        # Convert elapsed time to hours, minutes, and seconds
-        local hours=$((elapsed_time / 3600))
-        local minutes=$(( (elapsed_time % 3600) / 60 ))
+        # Convert elapsed time to minutes and seconds
+        local minutes=$((elapsed_time / 60))
         local seconds=$((elapsed_time % 60))
 
         # Only display elapsed time if it is greater than zero
         if [[ $elapsed_time -gt 0 ]]; then
-            export elapsed_time_display=$(printf "\nExecution time: %02d:%02d:%02d" $hours $minutes $seconds)
+            if [[ $minutes -gt 0 ]]; then
+                export elapsed_time_display=$(printf "\n%dm %ds" $minutes $seconds)
+            else
+                export elapsed_time_display=$(printf "\n%ds" $seconds)
+            fi
         else
             export elapsed_time_display=""
         fi

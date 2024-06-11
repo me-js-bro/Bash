@@ -37,10 +37,11 @@ alias cP='cd ~/Pictures'
 alias cV='cd ~/Videos'
 
 alias cd='cd_to_directory'
-alias md='mkdir'    #make directory
-alias tc='touch'    #creat file
+alias dir='mkdir'    #make directory
+alias file='touch'    #creat file
 
-alias r='fn_removal' #remove both file & direvtory ( one file / directory at a time )
+alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
+alias srm='sudo rm -rf' # remove in a sude command
 
 # check updates
 alias cu='fn_check_updates'

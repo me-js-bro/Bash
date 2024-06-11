@@ -84,9 +84,10 @@ chmod +x install.sh
 | `cD`     | `cd ~/Downloads` | Change to the Downloads directory. |
 | `cP`     | `cd ~/Pictures`  | Change to the Pictures directory. |
 | `cV`     | `cd ~/Videos`    | Change to the Videos directory. |
-| `md`     | `mkdir`          | Make a directory. |
-| `tc`     | `touch`          | Create a file. |
-| `r`      | `rm -rf`         | Remove both files and directories. |
+| `dir`     | `mkdir`          | Make a directory. |
+| `file`     | `touch`          | Create a file. |
+| `rm`      | `rm -rf`         | Remove both files and directories. |
+| `srm`      | `sudo rm -rf`         | Remove both files and directories with the sudo command |
 
 ### 2) Updated, Install & Uninstall Related
 
