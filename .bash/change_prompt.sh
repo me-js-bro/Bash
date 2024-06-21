@@ -68,4 +68,3 @@ sed -i "/^PS1=/c\\PS1='$escaped_PS1'" "$bashrc"
 source ~/.bash/.bashrc
 
 printf "Now relaunch your terminal and you're good to go...\n"
-
