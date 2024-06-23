@@ -135,26 +135,50 @@ fn_update() {
 fn_install() {
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
         aur=$(command -v yay || command -v paru) # find the aur helper
+        pkg_manager=$(command -v packan || command -v yay || command -v paru)
+
         case "$1" in
-            main) sudo pacman -S "$@"
+            main) 
+                shift
+                sudo pacman -S --noconfirm "$@"
                 ;;
-            aur) $aur -S "$@"
+            aur)
+                shift
+                $aur -S --noconfirm "$@"
                 ;;
             *) printf "Sorry, could not install \e[1;31m"$@"\e[1;0m...\n"
         esac
 
+        # check if the package manager is installed
+        if sudo "$pkg_manager" -Qs "$@" &>> /dev/null; then
+            update_notify "$@ installed successfully.."
+        fi
+
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
+
         sudo dnf install -y "$@"
+        # check if the package is installed
+        if sudo dnf list installed "$@" &>> /dev/null; then
+            update_notify "$@ installed successfully.."
+        fi
+
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        sudo zypper in "$@"
+
+        sudo zypper in -y "$@"
+        # check if the package is installed
+        if sudo zypper se -i "$@" &>> /dev/null; then
+            update_notify "$@ installed successfully.."
+        fi
+
     elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
-    	sudo apt install "$@"
+
+    	sudo apt install "$@" -y
+
     else
+
         printf "Unsupported distribution."
         return 1
     fi
-    sleep 1
-    update_notify "$@ installed successfully.."
 }
 
 # package install
@@ -162,9 +186,13 @@ fn_uninstall() {
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
         aur=$(command -v yay || command -v paru) # find the aur helper
         case "$1" in
-            main) sudo pacman -Rns
+            main) 
+                shift
+                sudo pacman -Rns "$@"
                 ;;
-            aur) $aur -Rns
+            aur)
+                shift
+                $aur -Rns "$@"
                 ;;
         esac
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
