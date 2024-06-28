@@ -56,7 +56,7 @@ alias updateA='fn_update aur'   # for arch
 alias hypr='code ~/.config/hypr'
 alias bar='code ~/.config/waybar'
 alias scripts='code ~/.config/hypr/scripts'
-alias bash='code ~/.bash'
+alias edit-bash='code ~/.bash'
 
 # install software
 alias install='fn_install'
