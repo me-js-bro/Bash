@@ -88,6 +88,7 @@ chmod +x install.sh
 | `file`     | `touch`          | Create a file. |
 | `rm`      | `rm -rf`         | Remove both files and directories. |
 | `srm`      | `sudo rm -rf`         | Remove both files and directories with the sudo command |
+| `ebash`   | `code .bash`    | Open .bash directory with the vs code to edit  |
 
 ### 2) Updated, Install & Uninstall Related
 
