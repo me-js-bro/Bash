@@ -56,6 +56,6 @@ bind "set completion-ignore-case on"
 
 unset rc
 
-# neofetch
-# fastfetch
+neofetch || fastfetch
+
 source ~/.local/share/blesh/ble.sh

@@ -20,7 +20,6 @@ alias fedbup="sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg" # fedora
 alias ..='cd ..'    # go back
 alias ...='cd ../..'    # go back 2 steps
 alias .='cd /'  # go to root dir
-alias dir='dir --color=auto'
 alias vdir='vdir --color=auto'
 
 # extract files
@@ -32,12 +31,13 @@ alias clr='clear'   #clear
 alias cls='clear'
 
 # change directory & directory related
-alias cD='cd ~/Downloads'
-alias cP='cd ~/Pictures'
-alias cV='cd ~/Videos'
+alias downloads='cd ~/Downloads'
+alias pictures='cd ~/Pictures'
+alias videos='cd ~/Videos'
+alias music='cd ~/Musics'
 
 alias cd='cd_to_directory'
-alias dir='mkdir'    #make directory
+# alias dir='mkdir'    #make directory
 alias file='touch'    #creat file
 
 alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
@@ -48,25 +48,20 @@ alias cu='fn_check_updates'
 
 # updates
 alias dup='sudo zypper dup' # distro update for opensuse
-alias update='fn_update'        # opensuse & fedora
-alias updateO='fn_update main'  # for arch
-alias updateA='fn_update aur'   # for arch
+alias update='fn_update'
 
 # open configs
 alias hypr='code ~/.config/hypr'
+alias i3='code ~/.config/i3'
 alias bar='code ~/.config/waybar'
-alias scripts='code ~/.config/hypr/scripts'
+alias polybar='code ~/.config/polybar'
+alias scripts='fn_open_scripts'
 alias ebash='code ~/.bash'
+alias zsh='code ~/.zsh'
 
-# install software
+# install and remove package
 alias install='fn_install'
-alias installO='fn_install main' # these are for Arch Linux
-alias installA='fn_install aur'  # these are for Arch Linux
-
-# uninstall
 alias remove='fn_uninstall'
-alias removeO='fn_uninstall main'   # for arch
-alias removeA='fn_uninstall aur'    # for arch
 
 
 # git alias
@@ -82,8 +77,10 @@ alias pull='git pull'
 alias info='git_info'
 
 # others
-alias nc='clr && neofetch' # neofetch
+alias nc='clr && neofetch'
 alias neofetch='clr && neofetch'
+alias fastfetch='clr && fastfetch'
+alias ff='clr && fastfetch'
 alias nitch='clr && nitch'
 alias sys='btop'
 

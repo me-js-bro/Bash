@@ -6,12 +6,12 @@ removed_sound="$HOME/.bash/sounds/removed.wav"
 
 # functions for sound notification
 update_notify() {
-    notify-send "$1"
+    notify-send "$1" "$2"
     paplay "$update_sound"
 }
 
 removed_notify() {
-    notify-send "$1"
+    notify-send "$1" "$2"
     paplay "$update_sound"
 }
 
@@ -84,7 +84,9 @@ fn_check_updates() {
 
         # Calculate total available updates
         upddates=$(( ofc + aur ))
-        echo "$upddates"
+        printf "Main: $ofc\n"
+        printf "Aur: $aur\n"
+        printf "Total: $upddates\n"
     
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
         dnf check-update -q | wc -l
@@ -102,12 +104,7 @@ fn_check_updates() {
 fn_update() {
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
         aur=$(command -v yay || command -v paru) # find the aur helper
-        case "$1" in
-            main) sudo pacman -Syu
-                ;;
-            aur) $aur -Syu
-                ;;
-        esac
+        $aur -Syyu --noconfirm
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
         sudo dnf update -y && sudo dnf upgrade -y --refresh
@@ -122,11 +119,11 @@ fn_update() {
     upd=$?
 
     if [[ "$upd" -eq 0 ]]; then
-        update_notify "  Packages are up to date now"
+        update_notify " ✅ " "Packages are up to date now"
     elif [[ "$upd" -gt 0 ]]; then
-        update_notify "Some packages may have skipped."
+        update_notify " ❕ " "Some packages may have skipped."
     else
-        update_notify "Could not update your packages."
+        update_notify " ❌ " "Could not update your packages."
     fi
 }
 
@@ -134,24 +131,13 @@ fn_update() {
 # Install software
 fn_install() {
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+
+        pkg_manager=$(command -v pacman || command -v yay || command -v paru)
         aur=$(command -v yay || command -v paru) # find the aur helper
-        pkg_manager=$(command -v packan || command -v yay || command -v paru)
-
-        case "$1" in
-            main) 
-                shift
-                sudo pacman -S --noconfirm "$@"
-                ;;
-            aur)
-                shift
-                $aur -S --noconfirm "$@"
-                ;;
-            *) printf "Sorry, could not install \e[1;31m"$@"\e[1;0m...\n"
-        esac
-
+        $aur -S --noconfirm "$@"
         # check if the package manager is installed
-        if sudo "$pkg_manager" -Qs "$@" &>> /dev/null; then
-            update_notify "$@ installed successfully.."
+        if sudo "$pkg_manager" -Qi "$@" &> /dev/null; then
+            update_notify " ✅ " "$@ installed successfully.."
         fi
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
@@ -159,15 +145,15 @@ fn_install() {
         sudo dnf install -y "$@"
         # check if the package is installed
         if sudo dnf list installed "$@" &>> /dev/null; then
-            update_notify "$@ installed successfully.."
+            update_notify " ✅ " "$@ installed successfully.."
         fi
 
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
 
         sudo zypper in -y "$@"
         # check if the package is installed
-        if sudo zypper se -i "$@" &>> /dev/null; then
-            update_notify "$@ installed successfully.."
+        if sudo zypper se -i "$@" &> /dev/null; then
+            update_notify " ✅ " "$@ installed successfully.."
         fi
 
     elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
@@ -184,29 +170,44 @@ fn_install() {
 # package install
 fn_uninstall() {
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
-        aur=$(command -v yay || command -v paru) # find the aur helper
-        case "$1" in
-            main) 
-                shift
-                sudo pacman -Rns "$@"
-                ;;
-            aur)
-                shift
-                $aur -Rns "$@"
-                ;;
-        esac
+    
+        pkg_manager=$(command -v pacman || command -v yay || command -v paru)
+        aur=$(command -v yay || command -v paru)
+        "$aur" -Rns "$@"
+
+        if [ ! "$pkg_manager" -Qi "$@" ] &> /dev/null; then
+            removed_notify " ✅ " "$@ Removed Successfully.."
+        else
+            removed_notify " ❌ " "Could not remove $@"
+        fi
+
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
+
         sudo dnf remove "$@"
+        if sudo dnf list installed "$@" &> /dev/null; then
+            removed_notify " ❌ " "Could not remove $@"
+        else
+            removed_notify " ✅ " "$@ Removed Successfully.."
+        fi
+
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+
         sudo zypper rm "$@"
+        if sudo zypper se -i "$@" &> /dev/null; then
+            removed_notify " ❌ " "Could not remove $@"
+        else
+            removed_notify " ✅ " "$@ Removed Successfully.."
+        fi
+
     elif [ -n "$(command -v apt)" ]; then	# ubunt or related
-    	sudo apt remove "$@"
+
+    	sudo apt remove "$@" && removed_notify " ✅ " "$@ Removed Successfully.."
+
     else
         printf "Unsupported distribution."
         return 1
     fi
-    sleep 1
-    removed_notify "$@ removed successfully"
+
 }
 
 
@@ -322,3 +323,22 @@ current_time() {
     echo $(date +%I:%M\ %p)
 }
 
+
+# Open Scripts
+fn_open_scripts () {
+    option1="1. Hyprland"
+    option2="2. i3"
+    options="$option1\n$option2"
+
+    printf "$options\n\n"
+    read -p "Choose WM: " wm
+    
+    case $wm in
+        1) [[ -d "$HOME/.config/hypr/scripts" ]] && code $HOME/.config/hypr/scripts; || { printf "\e[1;31mhypr dir was not found\e[1;0m\n"; }
+            ;;
+        2) [[ -d "$HOME/.config/i3/scripts" ]] && code $HOME/.config/i3/scripts; || { printf "\e[1;31mi3 dir was not found\e[1;0m\n"; }
+            ;;
+        *) printf "Choose from:\n$options"
+            ;;
+    esac
+} 

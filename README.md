@@ -81,9 +81,9 @@ chmod +x install.sh
 | Shortcut | Command | Description |
 |----------|---------|-------------|
 | `cd`     | `cd`    | Change directory. If the directory does not exist, it will ask to create it. |
-| `cD`     | `cd ~/Downloads` | Change to the Downloads directory. |
-| `cP`     | `cd ~/Pictures`  | Change to the Pictures directory. |
-| `cV`     | `cd ~/Videos`    | Change to the Videos directory. |
+| `downloads`     | `cd ~/Downloads` | Change to the Downloads directory. |
+| `pictures`     | `cd ~/Pictures`  | Change to the Pictures directory. |
+| `videos`     | `cd ~/Videos`    | Change to the Videos directory. |
 | `dir`     | `mkdir`          | Make a directory. |
 | `file`     | `touch`          | Create a file. |
 | `rm`      | `rm -rf`         | Remove both files and directories. |
@@ -94,16 +94,10 @@ chmod +x install.sh
 
 | Shortcut | Command | Description |
 |----------|---------|-------------|
-| `cu`     | `sudo dnf check-update` or `sudo zypper list-updates`  | Checks system updates (Fedora, OpenSuse. Also prints both Official and Aur updates in Arch Linux). |
-| `update`     | `sudo dnf upgrade`, `sudo zypper update`, or `sudo apt-get update` | Updates the system packages (Fedora, OpenSuse, Debian/Ubuntu). |
-| `updateO`    | `sudo pacman -Syu`     | Updates the official repo (Arch). |
-| `updateA`    | `yay/paru -Syu`        | Updates the AUR helper (Arch). |
-| `install`     | `sudo dnf install`, `zypper install`, or `apt-get install` | Install package (Fedora, OpenSuse, Debian/Ubuntu). |
-| `installO`    | `sudo pacman -S`    | Install from official Packan repo |
-| `installA`    | `yay/paru -S`     | Install from Arch User Repository (aur) |
-| `remove`     | `sduo dnf remove`, `sudo zypper remove`, or `sudo apt-get remove` | Uninstall package (Fedora, OpenSuse, Debian/Ubuntu). |
-| `removeO`    | `sudo pacman -R`       | Uninstall from main repo (Arch). |
-| `removeA`    | `yay -R`          | Uninstall from the AUR helper (Arch). |
+| `cu`     | `paru/yay -Qua / checkupdates`, `sudo dnf check-update` or `sudo zypper list-updates`  | Checks system updates (Arch, Fedora, OpenSuse. Also prints both Official and Aur updates in Arch Linux). |
+| `update`     | `paru/yay -Syyu`, `sudo dnf upgrade`, `sudo zypper update`, or `sudo apt-get update` | Updates the system packages (Arch, Fedora, OpenSuse, Debian/Ubuntu). |
+| `install`     | `paru/yay -S`, `sudo dnf install`, `zypper install`, or `apt-get install` | Install package (Arch, Fedora, OpenSuse, Debian/Ubuntu). |
+| `remove`     | `paru/yay -Rns`, `sduo dnf remove`, `sudo zypper remove`, or `sudo apt-get remove` | Uninstall package (Arch, Fedora, OpenSuse, Debian/Ubuntu). |
 
 ### 3) Git Related
 
@@ -116,6 +110,8 @@ chmod +x install.sh
 | `push`     | `git push`          | Push changes to the remote repository. |
 | `pushm`    | `git push -u origin main` | Push changes and set upstream to main. |
 | `pusho`    | `git push origin [branch]` | Push to a specified branch. |
+| `pull`    | `git pull origin [branch]` | Pull from a specified branch. |
+| `info`    | `git info` | Git Information. |
 
 ### 4) Changing Style
 
