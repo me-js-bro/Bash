@@ -89,12 +89,21 @@ done
 
 
 # now copy the .bash directory into the "$HOME" directory.
+
+printf "${attention} - Would you like to enable keybinds like vim? [ y/n ]\n"
+read -p "Select: " vim
+
 printf "${action} - Now installing the bash related files. \n \n"
+
 
 cp -r .bash ~/ 2>&1 | tee -a "$log"
 cp -r lsd ~/.config/ 2>&1 | tee -a "$log"
-ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
 
+if [[ "$vim" =~ ^[Yy]$ ]]; then
+    sed -i "s/set -o vi/g" ~/.bash/.bashrc
+fi
+
+ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
 
 # installing bash autosuggestions and syntal highlighting.
 if [ -d ~/.bash ]; then
