@@ -1,5 +1,10 @@
 # ~/.bash/.bashrc
 
+#---------------#
+# ┏┳    ┳┓    
+#  ┃┏   ┣┫┏┓┏┓
+# ┗┛┛•  ┻┛┛ ┗┛     
+#---------------#                                          
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -56,6 +61,10 @@ bind "set completion-ignore-case on"
 
 unset rc
 
-neofetch || fastfetch
+if type -P fastfetch &> /dev/null; then
+    fastfetch
+elif type -P neofetch &> /dev/null; then
+    neofetch
+fi
 
 source ~/.local/share/blesh/ble.sh

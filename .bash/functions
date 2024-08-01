@@ -3,15 +3,21 @@
 # Path to the sound file
 update_sound="$HOME/.bash/sounds/update.wav"
 removed_sound="$HOME/.bash/sounds/removed.wav"
+icon_dir="$HOME/.bash/icons"
 
 # functions for sound notification
-update_notify() {
-    notify-send "$1" "$2"
+install_notify() {
+    notify-send "$1" "$2" -i "$3"
     paplay "$update_sound"
 }
 
 removed_notify() {
-    notify-send "$1" "$2"
+    notify-send "$1" "$2" -i "$3"
+    paplay "$update_sound"
+}
+
+update_notify()  {
+    notify-send -i "$1" "$2" "$3"
     paplay "$update_sound"
 }
 
@@ -119,11 +125,11 @@ fn_update() {
     upd=$?
 
     if [[ "$upd" -eq 0 ]]; then
-        update_notify " ✅ " "Packages are up to date now"
+        update_notify "$icon_dir/install.png" "Done" "Packages are up to date"
     elif [[ "$upd" -gt 0 ]]; then
-        update_notify " ❕ " "Some packages may have skipped."
+        update_notify "$icon_dir/warning.png" "I tried but" "Some packages may be skipped"
     else
-        update_notify " ❌ " "Could not update your packages."
+        update_notify "$icon_dir/error.png" "Sorry" "could not update packages"
     fi
 }
 
@@ -134,34 +140,50 @@ fn_install() {
 
         pkg_manager=$(command -v pacman || command -v yay || command -v paru)
         aur=$(command -v yay || command -v paru) # find the aur helper
+
         $aur -S --noconfirm "$@"
-        # check if the package manager is installed
+        slepe 1
+
         if sudo "$pkg_manager" -Qi "$@" &> /dev/null; then
-            update_notify " ✅ " "$@ installed successfully.."
+            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
+        else
+            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
 
         sudo dnf install -y "$@"
-        # check if the package is installed
+        sleep 1
+
         if sudo dnf list installed "$@" &>> /dev/null; then
-            update_notify " ✅ " "$@ installed successfully.."
+            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
+        else
+            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
 
         sudo zypper in -y "$@"
-        # check if the package is installed
+        sleep 1
+
         if sudo zypper se -i "$@" &> /dev/null; then
-            update_notify " ✅ " "$@ installed successfully.."
+            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
+        else
+            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
 
     	sudo apt install "$@" -y
+        sleep 1
+
+        if dpkg -l | grep "$@" &> /dev/null; then
+            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
+        else
+            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
+        fi
 
     else
-
         printf "Unsupported distribution."
         return 1
     fi
@@ -175,33 +197,42 @@ fn_uninstall() {
         aur=$(command -v yay || command -v paru)
         "$aur" -Rns "$@"
 
-        if [ ! "$pkg_manager" -Qi "$@" ] &> /dev/null; then
-            removed_notify " ✅ " "$@ Removed Successfully.."
+        sleep 1
+        if ! "$pkg_manager" -Qi "$@" &> /dev/null; then
+            removed_notify "$@" "was removed successfully.." "$icon_dir/delete.png"
         else
-            removed_notify " ❌ " "Could not remove $@"
+            removed_notify "$@" "coule not be removed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
 
         sudo dnf remove "$@"
-        if sudo dnf list installed "$@" &> /dev/null; then
-            removed_notify " ❌ " "Could not remove $@"
+        sleep 1
+        if ! sudo dnf list installed "$@" &> /dev/null; then
+            removed_notify "$@" "was removed successfully.." "$icon_dir/delete.png"
         else
-            removed_notify " ✅ " "$@ Removed Successfully.."
+            removed_notify "$@" "coule not be removed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
 
         sudo zypper rm "$@"
-        if sudo zypper se -i "$@" &> /dev/null; then
-            removed_notify " ❌ " "Could not remove $@"
+        sleep 1
+        if ! sudo zypper se -i "$@" &> /dev/null; then
+            removed_notify "$@" "was removed successfully.." "$icon_dir/delete.png"
         else
-            removed_notify " ✅ " "$@ Removed Successfully.."
+            removed_notify "$@" "coule not be removed" "$icon_dir/error.png"
         fi
 
     elif [ -n "$(command -v apt)" ]; then	# ubunt or related
 
-    	sudo apt remove "$@" && removed_notify " ✅ " "$@ Removed Successfully.."
+        sudo apt remove "$@"
+        sleep 1
+    	if ! dpkg -l | grep "$@" &> /dev/null; then
+            removed_notify "$@" "was removed successfully.." "$icon_dir/delete.png"
+        else
+            removed_notify "$@" "coule not be removed" "$icon_dir/error.png"
+        fi
 
     else
         printf "Unsupported distribution."

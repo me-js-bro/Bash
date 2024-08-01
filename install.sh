@@ -1,15 +1,10 @@
 #!/bin/bash
 
-#################   Bash Installation   #################
-#                                                       #
-#       ███╗   ███╗ █████╗ ██╗  ██╗██╗███╗   ██╗        #
-#       ████╗ ████║██╔══██╗██║  ██║██║████╗  ██║        #
-#       ██╔████╔██║███████║███████║██║██╔██╗ ██║        #
-#       ██║╚██╔╝██║██╔══██║██╔══██║██║██║╚██╗██║        #
-#       ██║ ╚═╝ ██║██║  ██║██║  ██║██║██║ ╚████║        #
-#       ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝        #
-#                                                       #
-#########################################################
+#---------------#
+# ┏┳    ┳┓    
+#  ┃┏   ┣┫┏┓┏┓
+# ┗┛┛•  ┻┛┛ ┗┛     
+#---------------#
 
 # color defination
 red="\e[1;31m"
@@ -27,14 +22,15 @@ note="${megenta}[ NOTE ]${end}"
 done="${cyan}[ DONE ]${end}"
 error="${red}[ ERROR ]${end}"
 
-touch install-log
-log=install-log
+touch install.log
+log=install.log
 
 # required packages
 package=(
     bash-completion
     bat
     curl
+    fastfetch
     git
     lsd
 )
@@ -100,7 +96,7 @@ cp -r .bash ~/ 2>&1 | tee -a "$log"
 cp -r lsd ~/.config/ 2>&1 | tee -a "$log"
 
 if [[ "$vim" =~ ^[Yy]$ ]]; then
-    sed -i "s/set -o vi/g" ~/.bash/.bashrc
+    echo "set -o vi" >> ~/.bash/.bashrc
 fi
 
 ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
