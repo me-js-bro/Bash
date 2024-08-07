@@ -100,8 +100,11 @@ fn_check_updates() {
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         zypper lu --best-effort | grep -c 'v |'
 
+    elif [ -n "$(command -v apt)" ]; then   # debian/ubuntu
+        apt list --upgradable 2> /dev/null | grep -c '\[upgradable from'
+
     else
-        printf "Unsupported distribution."
+        printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
     fi
 }
@@ -116,8 +119,10 @@ fn_update() {
         sudo dnf update -y && sudo dnf upgrade -y --refresh
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper up -y && sudo zypper ref
+    elif [ -n "$(command -v apt)" ]; then
+        sudo apt update -y && sudo apt upgrade -y
     else
-        printf "Unsupported distribution."
+        printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
     fi
 
@@ -184,7 +189,7 @@ fn_install() {
         fi
 
     else
-        printf "Unsupported distribution."
+        printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
     fi
 }
@@ -224,7 +229,7 @@ fn_uninstall() {
             removed_notify "$@" "coule not be removed" "$icon_dir/error.png"
         fi
 
-    elif [ -n "$(command -v apt)" ]; then	# ubunt or related
+    elif [ -n "$(command -v apt)" ]; then  # ubunt or related
 
         sudo apt remove "$@"
         sleep 1
@@ -235,7 +240,7 @@ fn_uninstall() {
         fi
 
     else
-        printf "Unsupported distribution."
+        printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
     fi
 
