@@ -111,22 +111,39 @@ fn_check_updates() {
 
 # package updates
 fn_update() {
+    update_success=0
+    network_error=0
+
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
         aur=$(command -v yay || command -v paru) # find the aur helper
-        $aur -Syyu --noconfirm
+        $aur -Syyu --noconfirm || update_success=1
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        sudo dnf update -y && sudo dnf upgrade -y --refresh
+        sudo dnf update -y && sudo dnf upgrade -y --refresh || update_success=1
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        sudo zypper up -y && sudo zypper ref
-    elif [ -n "$(command -v apt)" ]; then
-        sudo apt update -y && sudo apt upgrade -y
+        sudo zypper up -y && sudo zypper ref || update_success=1
+    elif [ -n "$(command -v apt)" ]; then  # Debian/Ubuntu
+        sudo apt update -y && sudo apt upgrade -y || update_success=1
     else
         printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
     fi
 
-    fn_check_updates >> /dev/null
+    if [ $update_success -eq 1 ]; then
+        # Check for network issues
+        if ! ping -c 1 google.com &> /dev/null; then
+            network_error=1
+        fi
+        
+        if [ $network_error -eq 1 ]; then
+            update_notify "$icon_dir/error.png" "Network Error" "Please check your internet connection"
+        else
+            update_notify "$icon_dir/error.png" "Update Canceled" "The update was canceled or failed"
+        fi
+        return 1
+    fi
+
+    fn_check_updates > /dev/null
     upd=$?
 
     if [[ "$upd" -eq 0 ]]; then
@@ -134,9 +151,10 @@ fn_update() {
     elif [[ "$upd" -gt 0 ]]; then
         update_notify "$icon_dir/warning.png" "I tried but" "Some packages may be skipped"
     else
-        update_notify "$icon_dir/error.png" "Sorry" "could not update packages"
+        update_notify "$icon_dir/error.png" "Sorry" "Could not update packages"
     fi
 }
+
 
 
 # Install software

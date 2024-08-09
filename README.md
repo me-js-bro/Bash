@@ -20,57 +20,43 @@
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-5.png?raw=true" /> </p>
 
-<br>
-
-## Some Info
-<h4>I have tried do add some logos for different distros. Like you can see in the first screen shot. There is a logo of the OpenSuse. similarly I have added logos for: 
-<br>
-<br>
-1) Arch <br>
-2) ArcoLinux <br>
-3) Manjaro <br>
-4) Ubuntu <br>
-5) Debian <br>
-6) Linux Mint <br>
-7) Zorin Os <br>
-8) Pop Os! <br>
-9) Kali Linux <br>
-10) Parrot Os <br>
-11) Fedora <br>
-12) OpenSuse</h4> <br>
 
 ## Before Installation
-#### Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the `JetBrains Mono Nerd Font`. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
+Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the `JetBrains Mono Nerd Font`. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
 <br>
 
 ## Features
-<h3> 
 1) Shortcuts <br>
 2) Some functions for install, uninstall, check updates, update packages and so on <br>
 3) Syntax Highlighting <br>
 4) Auto Suggestions <br>
 5) Git branch name and left commits <br>
 6) Some cool looking themes <br>
-</h3>
+7) Why don't you explore by yourself? ( 0 _ 0 )
+
 
 <br>
 
 ## Installation
-### Clone this repository to install my bash configs.
+### Direct Installation
+You can directly run the command bellow and it will automaticly clone the repository and install the config. Before that make sure you have `curl` installed in your system. If not, simply install it using `pacman`, `dnf`, `zypper` or `apt`.
+- Run this command in your terminal:
+```
+bash <(curl https://raw.githubusercontent.com/me-js-bro/Bash/main/direct_install.sh)
+```
+
+### Manual Installation
+- Open terminal and run these commands.
 ```
 git clone --depth=1 https://github.com/me-js-bro/Bash.git
-```
 
-### Run these commands to install the files.
-
-```
 cd Bash
 chmod +x install.sh
 ./install.sh
 ```
 
 ## Edit alias & functions
-#### Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go. Also if you want to add your custom bash prompt, just go to `~/.bash/change_prompt.sh` file and add your prompt.
+Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` and `function` file. Just edit these files and you are good to go. Also if you want to add your custom bash prompt, just go to `~/.bash/change_prompt.sh` file and add your prompt.
 
 <br>
 
