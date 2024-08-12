@@ -70,12 +70,27 @@ printf "\n${green}[ * ] Cloning the installation repository... Please have patie
 
 [[ "$(pwd)" != "$HOME" ]] && cd "$HOME"
 
-git clone --depth=1 https://github.com/me-js-bro/Bash.git &> /dev/null
-
 if [[ -d "Bash" ]]; then
-    printf "\n${cyan}[ * ] Repository was clonned successfully!${end} \n${green}[ * ] Now starting the main script... ${end}\n" && sleep 1 && clear
+    cd Bash
+    if git pull origin main; then
+        printf "\n${cyan}[ * ] Repository was updated successfully.${end} \n${green}[ * ] Now starting the main script... ${end}\n" && sleep 1 && clear
+    else
+        printf "\n${red}[ ! ] Failed to update the repository..${end}\n"
+        exit 1
+    fi
+    
+    chmod +x install.sh
+    ./install.sh
+else
+    if git clone --depth=1 https://github.com/me-js-bro/Bash.git; then
+        printf "\n${cyan}[ * ] Repository was cloned successfully!${end} \n${green}[ * ] Now starting the main script... ${end}\n" && sleep 1 && clear
+    else
+        printf "\n${red}[ ! ] Failed to clone the repository. Please check your internet connection or the repository URL.${end}\n"
+        exit 1
+    fi
 
     cd Bash
     chmod +x install.sh
     ./install.sh
 fi
+
