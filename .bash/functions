@@ -159,57 +159,65 @@ fn_update() {
 
 # Install software
 fn_install() {
-    if [ -n "$(command -v pacman)" ]; then  # Arch Linux
 
-        pkg_manager=$(command -v pacman || command -v yay || command -v paru)
-        aur=$(command -v yay || command -v paru) # find the aur helper
+    printf "Which package(s) would you like to install? ( can be multiple packages separated by space )  \n"
+    read -p "Select: " -a packages  # Read user input into an array
 
-        $aur -S --noconfirm "$@"
-        slepe 1
+    for package in "${packages[@]}"; do
 
-        if sudo "$pkg_manager" -Qi "$@" &> /dev/null; then
-            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
+        if [ -n "$(command -v pacman)" ]; then  # Arch Linux
+
+            pkg_manager=$(command -v pacman || command -v yay || command -v paru)
+            aur=$(command -v yay || command -v paru) # find the aur helper
+
+            $aur -S --noconfirm "$package"
+            sleep 1
+
+            if sudo "$pkg_manager" -Qi "$package" &> /dev/null; then
+                install_notify "$package" "was installed successfully.." "$icon_dir/install.png"
+            else
+                removed_notify "$package" "could not be installed" "$icon_dir/error.png"
+            fi
+
+        elif [ -n "$(command -v dnf)" ]; then  # Fedora
+
+            sudo dnf install -y "$package"
+            sleep 1
+
+            if sudo dnf list installed "$package" &> /dev/null; then
+                install_notify "$package" "was installed successfully.." "$icon_dir/install.png"
+            else
+                removed_notify "$package" "could not be installed" "$icon_dir/error.png"
+            fi
+
+        elif [ -n "$(command -v zypper)" ]; then  # openSUSE
+
+            sudo zypper in -y "$package"
+            sleep 1
+
+            if sudo zypper se -i "$package" &> /dev/null; then
+                install_notify "$package" "was installed successfully.." "$icon_dir/install.png"
+            else
+                removed_notify "$package" "could not be installed" "$icon_dir/error.png"
+            fi
+
+        elif [ -n "$(command -v apt)" ]; then  # Ubuntu or Ubuntu-based
+
+            sudo apt install -y "$package"
+            sleep 1
+
+            if dpkg -l | grep -w "$package" &> /dev/null; then
+                install_notify "$package" "was installed successfully.." "$icon_dir/install.png"
+            else
+                removed_notify "$package" "could not be installed" "$icon_dir/error.png"
+            fi
+
         else
-            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
+            printf "\e[1;31m Unsupported package manager for now, please let us know in the GitHub repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
+            return 1
         fi
 
-    elif [ -n "$(command -v dnf)" ]; then  # Fedora
-
-        sudo dnf install -y "$@"
-        sleep 1
-
-        if sudo dnf list installed "$@" &>> /dev/null; then
-            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
-        else
-            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
-        fi
-
-    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-
-        sudo zypper in -y "$@"
-        sleep 1
-
-        if sudo zypper se -i "$@" &> /dev/null; then
-            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
-        else
-            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
-        fi
-
-    elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
-
-    	sudo apt install "$@" -y
-        sleep 1
-
-        if dpkg -l | grep "$@" &> /dev/null; then
-            install_notify "$@" "was installed successfully.." "$icon_dir/install.png"
-        else
-            removed_notify "$@" "coule not be installed" "$icon_dir/error.png"
-        fi
-
-    else
-        printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
-        return 1
-    fi
+    done
 }
 
 # package install
