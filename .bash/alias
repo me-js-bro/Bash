@@ -59,6 +59,9 @@ alias scripts='fn_open_scripts'
 alias ebash='code ~/.bash'
 alias zsh='code ~/.zsh'
 
+# search for package
+alias search='fn_search'
+
 # install and remove package
 alias install='fn_install'
 alias remove='fn_uninstall'
