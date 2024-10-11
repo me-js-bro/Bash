@@ -56,7 +56,7 @@ fn_install() {
         if [ -f "/etc/os-release" ]; then
             source "/etc/os-release"
 
-            if [[ "$ID" !== "ubuntu" || "$ID" !== "zorin" ]]; then
+            if [[ "$ID" != "ubuntu" || "$ID" != "zorin" ]]; then
     	        sudo apt install "$1"
             fi
         fi
