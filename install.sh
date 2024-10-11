@@ -45,8 +45,13 @@ fn_install() {
         sudo dnf install -y "$1"
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
         sudo zypper in "$1"
-    elif [ -n "$(command -v apt)" ]; then	# ubuntu or ubuntu based
-    	sudo apt install "$1"
+    elif [ -n "$(command -v apt)" ]; then	# debian
+        if [ -f "/etc/os-release" ]; then
+            source "/etc/os-release"
+
+            if [[ "$ID" !== "ubuntu" || "$ID" !== "zorin" ]]; then
+    	        sudo apt install "$1"
+            fi
     else
         echo "Unsupported distribution."
         return 1
