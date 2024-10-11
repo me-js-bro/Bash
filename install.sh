@@ -22,8 +22,8 @@ note="${megenta}[ NOTE ]${end}"
 done="${cyan}[ DONE ]${end}"
 error="${red}[ ERROR ]${end}"
 
-touch install.log
-log=install.log
+touch install-bash.log
+log=install-bash.log
 
 # required packages
 package=(
@@ -54,7 +54,7 @@ fn_install() {
 }
 
 for pkgs in "${package[@]}"; do
-   fn_install "$pkgs"
+   fn_install "$pkgs" 2>&1 | tee -a "$log"
 done
 
 printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
@@ -125,5 +125,43 @@ chmod +x ~/.bash/change_prompt.sh
 
 # source ~/.blerc 2>&1 | tee -a "$log"
 source ~/.bash/.bashrc 2>&1 | tee -a "$log"
+
+sleep 1 && clear
+
+printf "${attention} - Would you like to install a Nerd font? In this case, the 'JetBrains Mono Nerd' font? It is important. [ y/n ] \n"
+read -p "Select: " font
+
+if [[ "$font" =~ ^[Yy]$ ]]; then
+    printf "${green} [ * ] - Installing the ${cyan}JetBrains Mono Nerd font ${end} \n"
+
+    DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
+    # Maximum number of download attempts
+    MAX_ATTEMPTS=2
+    for ((ATTEMPT = 1; ATTEMPT <= MAX_ATTEMPTS; ATTEMPT++)); do
+        curl -OL "$DOWNLOAD_URL" && break
+        printf "Download attempt $ATTEMPT failed. Retrying in 2 seconds...\n"
+        sleep 2
+    done
+
+    # Check if the JetBrainsMono folder exists and delete it if it does
+    if [ -d ~/.local/share/fonts/JetBrainsMonoNerd ]; then
+        rm -rf ~/.local/share/fonts/JetBrainsMonoNerd
+    fi
+
+    mkdir -p ~/.local/share/fonts/JetBrainsMonoNerd
+    # Extract the new files into the JetBrainsMono folder and log the output
+    tar -xJkf JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMonoNerd
+
+    # Update font cache and log the output
+    sudo fc-cache -fv
+
+    # clean up 
+    if [ -d "JetBrainsMono.tar.xz" ]; then
+        rm -r JetBrainsMono.tar.xz
+    fi
+else
+    printf "${attention} - Please install a nerd font manually and set it to your terminal. \n"
+fi
+
 
 printf "${attention} - Re-open the terminal after you finish your work....\n" && sleep 1
