@@ -35,6 +35,13 @@ package=(
     lsd
 )
 
+ pkg_for_ubuntu=(
+    bash-completion
+    bat
+    curl
+    git
+    neofetch
+ )
 
 # package installation function
 fn_install() {
@@ -52,15 +59,33 @@ fn_install() {
             if [[ "$ID" !== "ubuntu" || "$ID" !== "zorin" ]]; then
     	        sudo apt install "$1"
             fi
+        fi
     else
         echo "Unsupported distribution."
         return 1
     fi
 }
 
+# install the packages
 for pkgs in "${package[@]}"; do
    fn_install "$pkgs" 2>&1 | tee -a "$log"
 done
+
+# installing packages if the distro is ubuntu or zprin os
+if [ -n "$(command -v apt)" ]; then
+    if [ -f "/etc/os-release" ]; then
+        source "/etc/os-release"
+
+        if [[ "$ID" == "ubuntu" || "$ID" == "zorin" ]]; then
+            for pkgs in "${pkg_for_ubuntu[@]}"; do
+                sudo apt install "$pkgs" -y 2>&1 | tee -a "$log"
+            done
+
+            # installing lsd from snap
+            sudo snap install lsd
+        fi
+    fi
+fi
 
 printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
 
