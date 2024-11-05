@@ -67,6 +67,10 @@ alias install='fn_install'
 alias remove='fn_uninstall'
 
 
+# compiling c++ file using gcc
+alias cpp='fn_compile_cpp'
+
+
 # git alias
 alias add='git add .'
 alias clone='git clone'

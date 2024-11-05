@@ -280,6 +280,23 @@ fn_uninstall() {
 
 }
 
+fn_compile_cpp() {
+    filename="$1"
+    if [ -n "$(command -v g++)" ]; then
+        printf "\e[0;36m[ * ] - Compiling...!\e[0m\n\n"
+
+        if g++ -std=c++20 "$filename".cpp -o "$filename"; then
+            printf "\e[1;92m[ ✓ ] - Successfully compiled your code...!\e[0m\n"
+            if [[ "$2" == "-o" ]]; then
+                printf "\e[1;92m        Output: \e[0m\n\n" 
+                ./$filename
+            fi
+        else
+            printf "\n\e[1;91m[  ] - Error: Could not compile your code...!\e[0m\n"
+        fi
+    fi
+}
+
 
 git_info() {
   # Check if current directory is a Git repository
