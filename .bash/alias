@@ -38,7 +38,8 @@ alias music='cd ~/Musics'
 
 alias cd='cd_to_directory'
 # alias dir='mkdir'    #make directory
-alias file='touch'    #creat file
+# alias file='touch'    #creat file
+alias file='fn_create_file'
 
 alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
 alias srm='sudo rm -rf' # remove in a sude command

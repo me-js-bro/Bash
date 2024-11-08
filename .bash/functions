@@ -280,6 +280,75 @@ fn_uninstall() {
 
 }
 
+# create programming files with boilarplate
+fn_create_file() {
+    filename="$1"
+
+    # Check if the file already exists
+    if [ -f "$filename" ]; then
+        echo "File '$filename' already exists."
+        return 1
+    fi
+
+    # Create the file and add boilerplate code
+    touch "$filename" 
+
+    if [[ "$filename" == *.cpp ]]; then
+        # For C++
+        cat << EOF > "$filename"
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+    return 0;
+}
+EOF
+
+    elif [[ "$filename" == *.c ]]; then
+        # For C
+        cat << EOF > "$filename"
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    return 0;
+}
+EOF
+
+    elif [[ "$filename" == *.html ]]; then
+        # For HTML
+        cat << EOF > "$filename"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+EOF
+
+    elif [[ "$filename" == *.java ]]; then
+        # For Java
+        classname=$(basename "$filename" .java)
+        cat << EOF > "$filename"
+public class $classname {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+EOF
+    fi
+
+    echo "File '$filename' created successfully with boilerplate code."
+}
+
+
+# compile cpp file with gcc
 fn_compile_cpp() {
     filename="$1"
     if [ -n "$(command -v g++)" ]; then
