@@ -90,18 +90,19 @@ fn_check_updates() {
 
         # Calculate total available updates
         upddates=$(( ofc + aur ))
-        printf "Main: $ofc\n"
-        printf "Aur: $aur\n"
-        printf "Total: $upddates\n"
+        printf "Main: $ofc\nAur: $aur \nTotal: $updates\n"
     
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        dnf check-update -q | wc -l
+        upd=$(dnf check-update -q | wc -l)
+        printf "You have \e[1;32m$upd\e[0m updates available\n"
 
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        zypper lu --best-effort | grep -c 'v |'
+        upd=$(zypper lu --best-effort | grep -c 'v  |')
+        printf "You have \e[1;32m$upd\e[0m updates available\n"
 
     elif [ -n "$(command -v apt)" ]; then   # debian/ubuntu
-        apt list --upgradable 2> /dev/null | grep -c '\[upgradable from'
+        upd=$(apt list --upgradable 2> /dev/null | grep -c '\[upgradable from')
+        printf "You have \e[1;32m$upd\e[0m updates available\n"
 
     else
         printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
