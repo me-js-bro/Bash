@@ -46,7 +46,7 @@ install_git() {
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
 
         if ! zypper se -i git &> /dev/null; then
-            sudo zypper in -y git
+            sudo zypper in -y --no-recommends git
         fi
 
     elif [ -n "$(command -v apt)" ]; then  # Ubuntu/Debian

@@ -22,8 +22,10 @@ note="${megenta}[ NOTE ]${end}"
 done="${cyan}[ DONE ]${end}"
 error="${red}[ ERROR ]${end}"
 
-touch install-bash.log
-log=install-bash.log
+# log file
+dir=`pwd`
+log="$dir/bash-install-$(date +%I:%M_%p).log"
+touch "$log"
 
 # required packages
 package=(
@@ -47,17 +49,17 @@ package=(
 fn_install() {
 
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
-        sudo pacman -S --noconfirm "$1"
+        sudo pacman -S --noconfirm "$1" 2>&1 | tee -a "$log"
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        sudo dnf install -y "$1"
+        sudo dnf install -y "$1" "$1" 2>&1 | tee -a "$log"
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        sudo zypper in "$1"
+        sudo zypper in -y "$1" "$1" 2>&1 | tee -a "$log"
     elif [ -n "$(command -v apt)" ]; then	# debian
         if [ -f "/etc/os-release" ]; then
             source "/etc/os-release"
 
             if [[ "$ID" != "ubuntu" || "$ID" != "zorin" ]]; then
-    	        sudo apt install "$1"
+    	        sudo apt install "$1" "$1" 2>&1 | tee -a "$log"
             fi
         fi
     else
@@ -183,7 +185,7 @@ if [[ "$font" =~ ^[Yy]$ ]]; then
     tar -xJkf JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMonoNerd
 
     # Update font cache and log the output
-    sudo fc-cache -fv
+    sudo fc-cache -fv &> /dev/null
 
     # clean up 
     if [ -d "JetBrainsMono.tar.xz" ]; then
@@ -194,4 +196,6 @@ else
 fi
 
 
-printf "${attention} - Re-open the terminal after you finish your work....\n" && sleep 1
+printf "${attention} - Re-open the terminal after you finish your work....\n" && sleep 1 && exit 0
+
+#__________ ( code finishes here ) __________#
