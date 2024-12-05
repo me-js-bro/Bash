@@ -479,23 +479,3 @@ precmd() {
 current_time() {
     echo $(date +%I:%M\ %p)
 }
-
-
-# Open Scripts
-fn_open_scripts () {
-    option1="1. Hyprland"
-    option2="2. i3"
-    options="$option1\n$option2"
-
-    printf "$options\n\n"
-    read -p "Choose WM: " wm
-    
-    case $wm in
-        1) [[ -d "$HOME/.config/hypr/scripts" ]] && code $HOME/.config/hypr/scripts; || { printf "\e[1;31mhypr dir was not found\e[1;0m\n"; }
-            ;;
-        2) [[ -d "$HOME/.config/i3/scripts" ]] && code $HOME/.config/i3/scripts; || { printf "\e[1;31mi3 dir was not found\e[1;0m\n"; }
-            ;;
-        *) printf "Choose from:\n$options"
-            ;;
-    esac
-} 

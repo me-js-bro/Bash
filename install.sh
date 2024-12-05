@@ -33,8 +33,10 @@ package=(
     bat
     curl
     fastfetch
+    figlet
     git
     lsd
+    xclip
 )
 
  pkg_for_ubuntu=(

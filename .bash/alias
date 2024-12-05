@@ -48,7 +48,7 @@ alias srm='sudo rm -rf' # remove in a sude command
 alias cu='fn_check_updates'
 
 # updates
-alias dup='sudo zypper dup' # distro update for opensuse
+alias dup='sudo zypper dup -y' # distro update for opensuse
 alias update='fn_update'
 
 # open configs
@@ -91,6 +91,8 @@ alias fastfetch='clr && fastfetch'
 alias ff='clr && fastfetch'
 alias nitch='clr && nitch'
 alias sys='btop'
+alias clock='tty-clock -c -t -D -s'
+alias ascii='$HOME/.bash/figlet.sh'
 
 
 # make executable script
