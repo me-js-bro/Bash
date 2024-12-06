@@ -44,6 +44,10 @@ alias file='fn_create_file'
 alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
 alias srm='sudo rm -rf' # remove in a sude command
 
+# disk spaces and RAM usage
+alias du='du -sh'
+alias mem='free -h'
+
 # check updates
 alias cu='fn_check_updates'
 
