@@ -34,6 +34,13 @@ fi
 source ~/.bash/functions
 source ~/.bash/alias
 
+# eval
+eval "$(fzf --bash)" # fzf
+if command -v thefuck &> /dev/null; then
+	eval "$(thefuck --alias)"
+	eval "$(thefuck --alias hell)"
+fi
+
 PROMPT_COMMAND='precmd; preexec'
 
 # Set prompt

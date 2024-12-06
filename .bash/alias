@@ -48,6 +48,9 @@ alias srm='sudo rm -rf' # remove in a sude command
 alias du='du -sh'
 alias mem='free -h'
 
+#fzf
+alias find='nvim $(fzf --preview="bat --color=always {}")'
+
 # check updates
 alias cu='fn_check_updates'
 

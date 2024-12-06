@@ -28,42 +28,40 @@ log="$dir/bash-install-$(date +%I:%M_%p).log"
 touch "$log"
 
 # required packages
-package=(
+common_packages=(
     bash-completion
     bat
     curl
     fastfetch
     figlet
+    fzf
     git
     lsd
     xclip
 )
 
+for_opensuse=(
+    python311
+    python311-pip
+    python311-pipx
+    xclip
+)
  pkg_for_ubuntu=(
-    bash-completion
-    bat
-    curl
-    git
     neofetch
  )
 
 # package installation function
 fn_install() {
+    local pkg=$1
 
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
-        sudo pacman -S --noconfirm "$1" 2>&1 | tee -a "$log"
+        sudo pacman -S --noconfirm "$pkg" 2>&1 | tee -a "$log"
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        sudo dnf install -y "$1" "$1" 2>&1 | tee -a "$log"
-    elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        sudo zypper in -y "$1" "$1" 2>&1 | tee -a "$log"
+        sudo dnf install -y "$pkg" 2>&1 | tee -a "$log"
+    elif [ -n "$(command -v zypper)" ]; then # opensuse
+        sudo zypper in -y "$pkg" 2>&1 | tee -a "$log"
     elif [ -n "$(command -v apt)" ]; then	# debian
-        if [ -f "/etc/os-release" ]; then
-            source "/etc/os-release"
-
-            if [[ "$ID" != "ubuntu" || "$ID" != "zorin" ]]; then
-    	        sudo apt install "$1" "$1" 2>&1 | tee -a "$log"
-            fi
-        fi
+        sudo apt install -y "$pkg" 2>&1 | tee -a "$log"
     else
         echo "Unsupported distribution."
         return 1
@@ -71,9 +69,32 @@ fn_install() {
 }
 
 # install the packages
-for pkgs in "${package[@]}"; do
+for pkgs in "${common_packages[@]}"; do
    fn_install "$pkgs" 2>&1 | tee -a "$log"
 done
+
+if command -v zypper &> /dev/null; then
+    for pkgs in "${for_opensuse[@]}"; do
+        sudo zypper in -y "$pkgs" 2>&1 | tee -a "$log"
+    done
+
+    # installing thefu*k
+    if command -v pipx &> /dev/null; then
+        pipx runpip thefuck install setuptools &> /dev/null
+        sleep 0.5
+        pipx install --python python3.11 thefuck &> /dev/null 2>&1 | tee -a "$log"
+
+        if command -v thefuck &> /dev/null; then
+            printf "${done} - thef*ck was installed successfully!\n" && sleep 1
+        fi
+    fi
+
+elif command -v pacman &> /dev/null; then  # Arch Linux
+        sudo pacman -S --noconfirm thefuck 2>&1 | tee -a "$log"
+
+elif command -v dnf &> /dev/null; then  # Fedora
+        sudo dnf install -y thefuck 2>&1 | tee -a "$log"
+fi
 
 # installing packages if the distro is ubuntu or zprin os
 if [ -n "$(command -v apt)" ]; then
@@ -86,7 +107,7 @@ if [ -n "$(command -v apt)" ]; then
             done
 
             # installing lsd from snap
-            sudo snap install lsd
+            sudo snap install lsd 2>&1 | tee -a "$log"
         fi
     fi
 fi
@@ -94,24 +115,26 @@ fi
 printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
 
 
+
 # Check and backup the directories and file
 for item in "$HOME/.bash" "$HOME/.bashrc" "$HOME/.config/lsd"; do
     if [[ -d $item ]]; then
+        mkdir -p ~/.Bash-Backup-${USER}
         case $item in
             $HOME/.bash)
                 printf "${note} - A ${green}.bash${end} directory is available... Backing it up\n" 
-                cp -r "$item" "$HOME/.bash-back" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
                 ;;
             $HOME/.config/lsd)
                 printf "${note} - A ${yellow}~/.config/lsd${end} directory is available... Backing it up\n" 
-                cp -r "$item" "$HOME/.config/lsd-back" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
                 ;;
         esac
     elif [[ -f $item ]]; then
         case $item in
             $HOME/.bashrc)
                 printf "${note} - A ${cyan}.bashrc${end} file is available... Backing it up\n" 
-                cp "$item" "$HOME/.bashrc-back-main" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bask-Backup-${USER}" 2>&1 | tee -a "$log"
                 ;;
         esac
     fi
@@ -198,6 +221,6 @@ else
 fi
 
 
-printf "${attention} - Re-open the terminal after you finish your work....\n" && sleep 1 && exit 0
+printf "${attention} - Type 'src' and you're good to go..\n" && sleep 1 && exit 0
 
 #__________ ( code finishes here ) __________#
