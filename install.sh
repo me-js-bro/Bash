@@ -32,12 +32,13 @@ common_packages=(
     bash-completion
     bat
     curl
+    eza
     fastfetch
     figlet
     fzf
     git
-    lsd
     xclip
+    zoxide
 )
 
 for_opensuse=(
@@ -46,9 +47,8 @@ for_opensuse=(
     python311-pipx
     xclip
 )
- pkg_for_ubuntu=(
-    neofetch
- )
+
+clear
 
 # package installation function
 fn_install() {
@@ -96,37 +96,17 @@ elif command -v dnf &> /dev/null; then  # Fedora
         sudo dnf install -y thefuck 2>&1 | tee -a "$log"
 fi
 
-# installing packages if the distro is ubuntu or zprin os
-if [ -n "$(command -v apt)" ]; then
-    if [ -f "/etc/os-release" ]; then
-        source "/etc/os-release"
-
-        if [[ "$ID" == "ubuntu" || "$ID" == "zorin" ]]; then
-            for pkgs in "${pkg_for_ubuntu[@]}"; do
-                sudo apt install "$pkgs" -y 2>&1 | tee -a "$log"
-            done
-
-            # installing lsd from snap
-            sudo snap install lsd 2>&1 | tee -a "$log"
-        fi
-    fi
-fi
-
 printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
 
 
 
 # Check and backup the directories and file
-for item in "$HOME/.bash" "$HOME/.bashrc" "$HOME/.config/lsd"; do
+for item in "$HOME/.bash" "$HOME/.bashrc"; do
     if [[ -d $item ]]; then
         mkdir -p ~/.Bash-Backup-${USER}
         case $item in
             $HOME/.bash)
                 printf "${note} - A ${green}.bash${end} directory is available... Backing it up\n" 
-                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
-                ;;
-            $HOME/.config/lsd)
-                printf "${note} - A ${yellow}~/.config/lsd${end} directory is available... Backing it up\n" 
                 mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
                 ;;
         esac
@@ -140,7 +120,6 @@ for item in "$HOME/.bash" "$HOME/.bashrc" "$HOME/.config/lsd"; do
     fi
 done
 
-
 # now copy the .bash directory into the "$HOME" directory.
 
 printf "${attention} - Would you like to enable keybinds like vim? [ y/n ]\n"
@@ -150,7 +129,6 @@ printf "${action} - Now installing the bash related files. \n \n"
 
 
 cp -r .bash ~/ 2>&1 | tee -a "$log"
-cp -r lsd ~/.config/ 2>&1 | tee -a "$log"
 
 if [[ "$vim" =~ ^[Yy]$ ]]; then
     echo "set -o vi" >> ~/.bash/.bashrc
@@ -220,7 +198,28 @@ else
     printf "${attention} - Please install a nerd font manually and set it to your terminal. \n"
 fi
 
+clear
 
-printf "${attention} - Type 'src' and you're good to go..\n" && sleep 1 && exit 0
+# Function to print with typewriter effect
+typewriter() {
+    local text="$1"
+    local delay="$2"
+    for (( i=0; i<${#text}; i++ )); do
+        printf "%s" "${text:$i:1}"
+        sleep "$delay"
+    done
+    printf "${end}\n"
+}
+
+# Call the function with the message and a delay of 0.05 seconds
+completed="[ * ] Installation and configuration completed. Close the tarminal and open it again."
+typewriter " $completed" 0.07
+sleep 0.5
+echo
+
+completed="[ * ] To change the shell prompt, type style and select among from 1 to 6"
+typewriter " $completed" 0.07
+sleep 0.5
+exit 0
 
 #__________ ( code finishes here ) __________#

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#______ If you want to add your prompt here, just add into the "case" condition, and also into the "display_menu function." ______#
-
 # Function to display the menu
 display_menu() {
     echo "Select a prompt style:"
@@ -21,10 +19,10 @@ read -n1 -rep "Choose Your style: " style
 # everything you see "\e[..." are just colors...
 case $style in
     1)
-        PS1='\e[90m${elapsed_time_display}\e[0m\n┌( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m󰋜\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m$(check_distro)\e[1;0m"; else echo " \w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")]\n└─|> '
+        PS1='\e[90m${elapsed_time_display}\e[0m\n┌( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m󰋜\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; else echo " \w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")]\n└─|> '
         ;;
     2)
-        PS1='\e[90m${elapsed_time_display}\e[0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m$(check_distro)\e[1;0m"; else echo "\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
+        PS1='\e[90m${elapsed_time_display}\e[0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; else echo "\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
         ;;
     3)
         PS1='\e[90m${elapsed_time_display}\e[0m $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\w"; fi) \e[1;32m\e[1;0m ' 

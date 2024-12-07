@@ -1,16 +1,13 @@
 # ~/.bash/alias
-
 source ~/.bash/functions
 
 ## list ##
-# Custom LS_COLORS
-LS_COLORS='di=36:fi=33:*.sh=32:*.*=35'
-
-alias ls='lsd --color=always --group-directories-first'     # preferred listing
-alias la='lsd -a --color=always --group-directories-first'     # preferred listing
-alias lsa='lsd -all --color=always --group-directories-first'      # all files and dirs
-alias ll='ls -l --color=always --group-directories-first'      # directories
-alias l.='ls -ald --color=always --group-directories-first .*' # show only dotfiles
+alias ls='eza --color=always --icons=always'
+alias la='eza -a --icons=always'
+alias ll='eza -l -a --icons=always --no-time'
+alias lst='eza -T --level=2 --color=always --icons=always'
+alias lsf='eza -f -a --color=always --icons=always'
+alias lstd='eza -D -T --level=2 --color=always --icons=always'
 
 alias cat='bat --style header --style snip --style changes --style header'  # cat
 
@@ -20,25 +17,13 @@ alias fedbup="sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg" # fedora
 alias ..='cd ..'    # go back
 alias ...='cd ../..'    # go back 2 steps
 alias .='cd /'  # go to root dir
-alias vdir='vdir --color=auto'
-
-# extract files
-alias ex='ex'
+alias cd='z'
 
 # other
 alias src='source ~/.bash/.bashrc' #source .bashrc
 alias clr='clear'   #clear
 alias cls='clear'
 
-# change directory & directory related
-alias downloads='cd ~/Downloads'
-alias pictures='cd ~/Pictures'
-alias videos='cd ~/Videos'
-alias music='cd ~/Musics'
-
-alias cd='cd_to_directory'
-# alias dir='mkdir'    #make directory
-# alias file='touch'    #creat file
 alias file='fn_create_file'
 
 alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
@@ -51,6 +36,9 @@ alias mem='free -h'
 #fzf
 alias find='nvim $(fzf --preview="bat --color=always {}")'
 
+#nvim
+alias vi='nvim'
+
 # check updates
 alias cu='fn_check_updates'
 
@@ -58,26 +46,12 @@ alias cu='fn_check_updates'
 alias dup='sudo zypper dup -y' # distro update for opensuse
 alias update='fn_update'
 
-# open configs
-alias hypr='code ~/.config/hypr'
-alias i3='code ~/.config/i3'
-alias bar='code ~/.config/waybar'
-alias polybar='code ~/.config/polybar'
-alias scripts='fn_open_scripts'
-alias ebash='code ~/.bash'
-alias zsh='code ~/.zsh'
-
-# search for package
-alias search='fn_search'
-
 # install and remove package
 alias install='fn_install'
 alias remove='fn_uninstall'
 
-
 # compiling c++ file using gcc
 alias cpp='fn_compile_cpp'
-
 
 # git alias
 alias add='git add .'
@@ -96,15 +70,11 @@ alias nc='clr && neofetch'
 alias neofetch='clr && neofetch'
 alias fastfetch='clr && fastfetch'
 alias ff='clr && fastfetch'
-alias nitch='clr && nitch'
 alias sys='btop'
 alias clock='tty-clock -c -t -D -s'
-alias ascii='$HOME/.bash/figlet.sh'
-
 
 # make executable script
 alias exe='chmod +x'
-
 
 # change style
 alias style='bash ~/.bash/change_prompt.sh'

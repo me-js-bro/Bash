@@ -9,42 +9,21 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Load starship prompt if starship is installed
-if [ -x /usr/bin/starship ]; then
-	__main() {
-		local major="${BASH_VERSINFO[0]}"
-		local minor="${BASH_VERSINFO[1]}"
-
-		if ((major > 4)) || { ((major == 4)) && ((minor >= 1)); }; then
-			source <("/usr/bin/starship" init bash --print-full-init)
-		else
-			source /dev/stdin <<<"$("/usr/bin/starship" init bash --print-full-init)"
-		fi
-	}
-	__main
-	unset -f __main
-fi
-
 # Source global definitions
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# source all the alias and functions
-source ~/.bash/functions
-source ~/.bash/alias
-
 # eval
 eval "$(fzf --bash)" # fzf
-if command -v thefuck &> /dev/null; then
-	eval "$(thefuck --alias)"
-	eval "$(thefuck --alias hell)"
-fi
+eval "$(thefuck --alias)"
+eval "$(thefuck --alias hell)"
+eval "$(zoxide init bash)"
 
-PROMPT_COMMAND='precmd; preexec'
+export PROMPT_COMMAND='precmd; preexec'
 
 # Set prompt
-PS1='\e[90m${elapsed_time_display}\e[0m\n╭( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo "\e[1;33m \W\e[1;0m"; fi) ]$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo ──{ $(git_info) }─ || echo "")─( $(current_time) )\n╰─\e[1;32m❯\e[1;0m '
+PS1='\e[90m${elapsed_time_display}\e[0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; else echo "\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
 
 
 
@@ -63,15 +42,29 @@ if [ -d ~/.bashrc.d ]; then
     done
 fi
 
+show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head 200; else bat -n --color=always --line-range :1000 {}; fi"
+
+export FZF_CTRL_T_OPTS="--preview '$show_file_or_dir_preview'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \${}'"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
+  esac
+}
+
 #ignore upper and lowercase when TAB completion
 bind "set completion-ignore-case on"
 
 unset rc
 
-if type -P fastfetch &> /dev/null; then
-    fastfetch
-elif type -P neofetch &> /dev/null; then
-    neofetch
-fi
-
+# source all the alias and functions
+source ~/.bash/functions
+source ~/.bash/alias
 source ~/.local/share/blesh/ble.sh
