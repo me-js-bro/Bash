@@ -37,7 +37,6 @@ common_packages=(
     figlet
     fzf
     git
-    xclip
     zoxide
 )
 
@@ -45,7 +44,6 @@ for_opensuse=(
     python311
     python311-pip
     python311-pipx
-    xclip
 )
 
 clear
@@ -114,7 +112,7 @@ for item in "$HOME/.bash" "$HOME/.bashrc"; do
         case $item in
             $HOME/.bashrc)
                 printf "${note} - A ${cyan}.bashrc${end} file is available... Backing it up\n" 
-                mv "$item" "$HOME/.Bask-Backup-${USER}" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
                 ;;
         esac
     fi
@@ -158,7 +156,10 @@ sleep 1
 
 chmod +x ~/.bash/change_prompt.sh
 
-# source ~/.blerc 2>&1 | tee -a "$log"
+eval "$(fzf --bash)" # fzf
+eval "$(thefuck --alias)" #thefu*k
+eval "$(thefuck --alias hell)" #thefu*k as hell
+eval "$(zoxide init bash)" # zoxide
 source ~/.bash/.bashrc 2>&1 | tee -a "$log"
 
 sleep 1 && clear
@@ -204,6 +205,7 @@ clear
 typewriter() {
     local text="$1"
     local delay="$2"
+        printf "[ * ]\n"
     for (( i=0; i<${#text}; i++ )); do
         printf "%s" "${text:$i:1}"
         sleep "$delay"
@@ -212,12 +214,12 @@ typewriter() {
 }
 
 # Call the function with the message and a delay of 0.05 seconds
-completed="[ * ] Installation and configuration completed. Close the tarminal and open it again."
+completed="Bash configuration has been completed!\n Close the tarminal and open it again."
 typewriter " $completed" 0.07
 sleep 0.5
 echo
 
-completed="[ * ] To change the shell prompt, type style and select among from 1 to 6"
+completed="To change the shell prompt, type style and select from 1 to 6"
 typewriter " $completed" 0.07
 sleep 0.5
 exit 0
