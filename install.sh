@@ -105,14 +105,14 @@ for item in "$HOME/.bash" "$HOME/.bashrc"; do
         case $item in
             $HOME/.bash)
                 printf "${note} - A ${green}.bash${end} directory is available... Backing it up\n" 
-                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
                 ;;
         esac
     elif [[ -f $item ]]; then
         case $item in
             $HOME/.bashrc)
                 printf "${note} - A ${cyan}.bashrc${end} file is available... Backing it up\n" 
-                mv "$item" "$HOME/.Bash-Backup-${USER}" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
                 ;;
         esac
     fi
@@ -143,8 +143,7 @@ if [ -d ~/.bash ]; then
 
     if [ -f ~/.blerc ]; then
         printf "${action} - Backing up ~/.blerc file \n"
-
-        cp ~/.blerc ~/.blerc-back
+        mv ~/.blerc "$HOME/Bash-Backup-${USER}/"
     fi
 
     touch ~/.blerc
@@ -156,13 +155,6 @@ sleep 1
 
 chmod +x ~/.bash/change_prompt.sh
 
-eval "$(fzf --bash)" # fzf
-eval "$(thefuck --alias)" #thefu*k
-eval "$(thefuck --alias hell)" #thefu*k as hell
-eval "$(zoxide init bash)" # zoxide
-source ~/.bash/.bashrc 2>&1 | tee -a "$log"
-
-sleep 1 && clear
 
 printf "${attention} - Would you like to install a Nerd font? In this case, the 'JetBrains Mono Nerd' font? It is important. [ y/n ] \n"
 read -p "Select: " font
@@ -199,7 +191,13 @@ else
     printf "${attention} - Please install a nerd font manually and set it to your terminal. \n"
 fi
 
-clear
+eval "$(fzf --bash)" # fzf
+eval "$(thefuck --alias)" #thefu*k
+eval "$(thefuck --alias hell)" #thefu*k as hell
+eval "$(zoxide init bash)" # zoxide
+source ~/.bash/.bashrc 2>&1 | tee -a "$log"
+
+sleep 1 && clear
 
 # Function to print with typewriter effect
 typewriter() {

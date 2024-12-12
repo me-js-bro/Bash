@@ -150,10 +150,10 @@ git_info() {
 
     # Print information
     if [[ -n "$branch_name"  ]]; then
-      printf "\e[1;37m \x1b[38;5;46m $branch_name \e[1;0m \u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+      printf "\e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
 
       if [[ "$unpushed_count" -gt 0 ]]; then
-        printf "\x1b[38;5;214m($unpushed_count) \e[3;0m\n"  # Unpushed count in orange
+        printf "\e[1;38;5;214m!$unpushed_count \e[3;0m\n"  # Unpushed count in orange
       else
         printf "\e[1;32m✓ \e[3;0m\n"  # shows an icon
       fi
