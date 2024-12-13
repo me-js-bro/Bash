@@ -212,7 +212,7 @@ typewriter() {
 }
 
 # Call the function with the message and a delay of 0.05 seconds
-completed="Bash configuration has been completed!\n Close the tarminal and open it again."
+completed="Bash configuration has been completed! Close the tarminal and open it again."
 typewriter " $completed" 0.07
 sleep 0.5
 echo

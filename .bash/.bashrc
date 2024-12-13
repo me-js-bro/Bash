@@ -14,11 +14,8 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# eval
-eval "$(fzf --bash)" # fzf
-eval "$(thefuck --alias)"
-eval "$(thefuck --alias hell)"
-eval "$(zoxide init bash)"
+# initialize features [ check ~/.bash/functions/fn_init ]
+fn_init
 
 export PROMPT_COMMAND='precmd; preexec'
 

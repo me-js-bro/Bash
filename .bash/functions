@@ -161,6 +161,14 @@ git_info() {
   fi
 }
 
+# initialize features.
+fn_init () {
+    eval "$(fzf --bash)" # fzf
+    eval "$(thefuck --alias)" # thefu*k
+    eval "$(thefuck --alias hell)" # thefu*k
+    eval "$(zoxide init bash)" # zoxide
+}
+
 # # Function to capture the start time
 preexec() {
     export command_start_time=$(date +%s)
