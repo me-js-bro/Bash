@@ -1,16 +1,34 @@
 # ~/.bash/functions
 
+# copy and paste Function
+fn_copy_paste() {
+    local destination="${!#}"  # Last parameter as the destination
+    local items=("${@:1:$(($#-1))}")  # All parameters except the last one (items to copy)
+
+    for item in "${items[@]}"; do
+        if [[ -f "$item" ]]; then
+            printf ":: Copying a file\n"
+            cp "$item" "$destination"
+        elif [[ -d "$item" ]]; then
+            printf ":: Copying a directory\n"
+            cp -r "$item" "$destination"
+        fi
+    done
+}
+
 # remove files and directories
 fn_removal() {
-    local dir_or_file="$1"
-
-    if [ -f "$dir_or_file" ]; then
-        rm "$dir_or_file" -v
-    elif [ -d "$dir_or_file" ]; then
-        rm -rf "$dir_or_file" -v
-    else
-        printf "\e[1;31m'$dir_or_file' does not exist or is neither a regular file nor a directory.\e[0m\n"
-    fi
+    for item in "$@"; do
+        if [[ -f "$item" ]]; then
+            printf ":: Removing a file\n"
+            rm "$item"
+        elif [[ -d "$item" ]]; then
+            printf ":: Removing a directory\n"
+            rm -rf "$item"
+        else
+            printf "[ !! ]\n$item does not exist or is neither a regular file nor a directory\n"
+        fi
+    done
 }
 
 # check updates
@@ -51,14 +69,14 @@ fn_update() {
 
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
         aur=$(command -v yay || command -v paru) # find the aur helper
-        $aur -Syyu --noconfirm || update_success=1
+        $aur -Syyu --noconfirm
 
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        sudo dnf update -y && sudo dnf upgrade -y --refresh || update_success=1
+        sudo dnf update -y && sudo dnf upgrade -y --refresh
     elif [ -n "$(command -v zypper)" ]; then  # openSUSE
-        sudo zypper up -y && sudo zypper ref || update_success=1
+        sudo zypper ref && sudo zypper up -y
     elif [ -n "$(command -v apt)" ]; then  # Debian/Ubuntu
-        sudo apt update -y && sudo apt upgrade -y || update_success=1
+        sudo apt update -y && sudo apt upgrade -y
     else
         printf "\e[1;31m Unsupported package manager for now, please let us know in the github repository...\e[1;0m \n https://github.com/me-js-bro/Bash\n"
         return 1
@@ -159,14 +177,6 @@ git_info() {
       fi
     fi
   fi
-}
-
-# initialize features.
-fn_init () {
-    eval "$(fzf --bash)" # fzf
-    eval "$(thefuck --alias)" # thefu*k
-    eval "$(thefuck --alias hell)" # thefu*k
-    eval "$(zoxide init bash)" # zoxide
 }
 
 # # Function to capture the start time
