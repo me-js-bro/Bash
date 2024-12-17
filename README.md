@@ -29,6 +29,8 @@
 
 ## A short video
 
+https://github.com/user-attachments/assets/319eeb90-b4d5-41a4-ab18-87389f7bbfcf
+
 ## Before Installation
 
 Make sure you install any of the nerd font's and set that font in your terminal, so that the prompt look nice. I suggest to use the `JetBrains Mono Nerd Font`. Just visit [Here](https://nerdfonts.com) and download the font and install it using your Font Manager. Then set the font in your Terminal.
