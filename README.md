@@ -8,17 +8,26 @@
 
 ## Here are some screenshos
 
+### Styles
+
 <p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/1.png?raw=true" /> </p>
 
 <p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/3.png?raw=true" /></p>
 
 <br>
 
-## Styles
+### Features
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4.png?raw=true" /></p>
+<p>
+<img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/1.png?raw=true" />
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-4-1.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/Styles/style-5.png?raw=true" /> </p>
+<img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/cd.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/fuck.png?raw=true" />
+
+<img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/syntax-highlighting.png?raw=true" />
+
+</p>
+
+## A short video
 
 ## Before Installation
 
