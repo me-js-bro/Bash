@@ -1,4 +1,4 @@
-# ~/.bash/functions
+# ~/.bash/functions.sh
 
 # copy and paste Function
 fn_copy_paste() {
@@ -29,6 +29,24 @@ fn_removal() {
             printf "[ !! ]\n$item does not exist or is neither a regular file nor a directory\n"
         fi
     done
+}
+
+# disk spaces
+fn_resources(){
+    case $1 in
+        __disk)
+            disk_total=$(df / -h | awk 'NR==2 {print $2}')
+            disk_used=$(df / -h | awk 'NR==2 {print $3}')
+            disk_free=$(df / -h | awk 'NR==2 {print $4}')
+            printf "Total: $disk_total\nUsed: $disk_used\nFree: $disk_free\n"
+            ;;
+        __memory)
+            mem_total=$(free -h | awk 'NR==2 {print $2}')
+            mem_used=$(free -h | awk 'NR==2 {print $3}')
+            mem_free=$(free -h | awk 'NR==2 {print $7}')
+            printf "Total: $mem_total\nUsed: $mem_used\nFree: $mem_free\n"
+            ;;
+    esac
 }
 
 # check updates

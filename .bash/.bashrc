@@ -62,6 +62,6 @@ bind "set completion-ignore-case on"
 unset rc
 
 # source all the alias and functions
-source ~/.bash/functions
-source ~/.bash/alias
+source ~/.bash/functions.sh
+source ~/.bash/alias.sh
 source ~/.local/share/blesh/ble.sh

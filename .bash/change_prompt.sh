@@ -8,7 +8,6 @@ display_menu() {
     echo "3) Style 3"
     echo "4) Style 4"
     echo "5) Style 5"
-    echo "6) Style 6"
     echo "q) Quit"
 }
 
@@ -19,21 +18,18 @@ read -n1 -rep "Choose Your style: " style
 # everything you see "\e[..." are just colors...
 case $style in
     1)
-        PS1='\e[90m${elapsed_time_display}\e[0m\n┌( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m󰋜\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; else echo " \w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")]\n└─|> '
+        PS1='$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
         ;;
     2)
-        PS1='\e[90m${elapsed_time_display}\e[0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
-        ;;
-    3)
         PS1='\e[90m${elapsed_time_display}\e[0m $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\w"; fi) \e[1;32m\e[1;0m ' 
         ;;
-    4)
+    3)
         PS1='\e[90m${elapsed_time_display}\e[0m\n\e[1;36m╭─\e[1;0m $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m "; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\e[1;33m\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "") \n\e[1;36m╰──\e[1;32m❯\e[1;0m '
         ;;
-    5)
+    4)
         PS1='\e[90m${elapsed_time_display}\e[0m\n\e[1;36m╭─ \e[1;37m\u\e[1;34m@\e[1;37m\h\e[1;0m in $(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m󰜥"; elif [[ "$PWD" = "/" ]]; then echo "\e[1;36m\e[1;0m"; else echo "\e[1;33m\W"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;36m╰──\e[1;32m󰘧\e[1;0m '
         ;;
-    6)
+    5)
         PS1='\e[90m${elapsed_time_display}\e[0m\n╭( \u )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo "\e[1;33m \W\e[1;0m"; fi) ]$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo ──{ $(git_info) }─ || echo "")─( $(current_time) )\n╰─\e[1;32m❯\e[1;0m '
         ;;
     q)

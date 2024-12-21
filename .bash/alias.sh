@@ -1,5 +1,5 @@
-# ~/.bash/alias
-source ~/.bash/functions
+# ~/.bash/alias.sh
+source ~/.bash/functions.sh
 
 ## list ##
 alias ls='eza --color=always --icons=always'
@@ -32,13 +32,15 @@ alias cp='fn_copy_paste'
 
 # disk spaces and RAM usage
 alias du='du -sh'
-alias mem='free -h'
+alias mem='fn_resources __memory'
+alias disk='fn_resources __disk'
 
 #fzf
 alias find='nvim $(fzf --preview="bat --color=always {}")'
 
 #nvim
 alias nv='nvim'
+alias open='nvim .'
 
 # check updates
 alias cu='fn_check_updates'
@@ -73,6 +75,7 @@ alias fastfetch='clr && fastfetch'
 alias ff='clr && fastfetch'
 alias sys='btop'
 alias clock='tty-clock -c -t -D -s'
+alias mat='cmatrix'
 
 # make executable script
 alias exe='chmod +x'
