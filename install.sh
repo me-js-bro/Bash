@@ -11,16 +11,38 @@ red="\e[1;31m"
 green="\e[1;32m"
 yellow="\e[1;33m"
 blue="\e[1;34m"
-megenta="\e[1;1;35m"
+magenta="\e[1;1;35m"
 cyan="\e[1;36m"
+orange="\x1b[38;5;214m"
 end="\e[1;0m"
 
-# initial texts
-attention="${yellow}[ ATTENTION ]${end}"
-action="${green}[ ACTION ]${end}"
-note="${megenta}[ NOTE ]${end}"
-done="${cyan}[ DONE ]${end}"
-error="${red}[ ERROR ]${end}"
+# prompt function
+msg() {
+    local actn=$1
+    local msg=$2
+
+    case "$actn" in
+        act)
+            echo -e "${green}=>${end} $msg"
+            ;;
+        att)
+            echo -e "${yellow}!!${end} $msg"
+            ;;
+        ask)
+            echo -e "${orange}??${end} $msg"
+            ;;
+        dn)
+            echo -e "${cyan}::${end} $msg\n"
+            ;;
+        skp)
+            echo -e "${magenta}[ SKIP ]${end} $msg"
+            ;;
+        err)
+            echo -e "${red}>< Ohh no! an error...${end}\n   $msg\n"
+            ;;
+    esac
+}
+
 
 # log file
 dir=`pwd`
@@ -46,18 +68,48 @@ for_opensuse=(
     python311-pipx
 )
 
-clear
+sleep 1 && clear
 
 # package installation function
 fn_install() {
     local pkg=$1
 
     if [ -n "$(command -v pacman)" ]; then  # Arch Linux
-        sudo pacman -S --noconfirm "$pkg" 2>&1 | tee -a "$log"
+        if sudo pacman -Q "$pkg" &> /dev/null; then
+            msg skp "Skipping $pkg, it was already installed..."
+        else
+            msg act "Installing $pkg..."
+            sudo pacman -S --noconfirm "$pkg" 2>&1 | tee -a "$log" &> /dev/null
+            if sudo pacman -Q "$pkg" &> /dev/null; then
+                msg dn "$pkg was installed successfully!"
+            else
+                msg err "Could not install $pkg"
+            fi
+        fi
     elif [ -n "$(command -v dnf)" ]; then  # Fedora
-        sudo dnf install -y "$pkg" 2>&1 | tee -a "$log"
+        if rpm -q "$pkg" &> /dev/null; then
+            msg skp "Skipping $pkg, it was already installed..."
+        else
+            msg act "Installing $pkg..."
+            sudo dnf install -y "$pkg" 2>&1 | tee -a "$log"
+            if rpm -q "$pkg" &> /dev/null; then
+                msg dn "$pkg was installed successfully!"
+            else
+                msg err "Could not install $pkg"
+            fi
+        fi
     elif [ -n "$(command -v zypper)" ]; then # opensuse
-        sudo zypper in -y "$pkg" 2>&1 | tee -a "$log"
+        if sudo zypper se -i "$pkg" &> /dev/null; then
+            msg skp "Skipping $pkg, it was already installed..."
+        else
+            msg act "Installing $pkg..."
+            sudo zypper in -y "$pkg" 2>&1 | tee -a "$log"
+            if sudo zypper se -i "$pkg" &> /dev/null; then
+                msg dn "$pkg was installed successfully!"
+            else
+                msg err "Could not install $pkg"
+            fi
+        fi
     elif [ -n "$(command -v apt)" ]; then	# debian
         sudo apt install -y "$pkg" 2>&1 | tee -a "$log"
     else
@@ -73,7 +125,7 @@ done
 
 if command -v zypper &> /dev/null; then
     for pkgs in "${for_opensuse[@]}"; do
-        sudo zypper in -y "$pkgs" 2>&1 | tee -a "$log"
+        fn_install "$pkgs" 2>&1 | tee -a "$log"
     done
 
     # installing thefu*k
@@ -83,7 +135,7 @@ if command -v zypper &> /dev/null; then
         pipx install --python python3.11 thefuck &> /dev/null 2>&1 | tee -a "$log"
 
         if command -v thefuck &> /dev/null; then
-            printf "${done} - thef*ck was installed successfully!\n" && sleep 1
+            msg dn "thef*ck was installed successfully!" && sleep 1
         fi
     fi
 
@@ -94,8 +146,7 @@ elif command -v dnf &> /dev/null; then  # Fedora
         sudo dnf install -y thefuck 2>&1 | tee -a "$log"
 fi
 
-printf "${attention} - Installing bash files...\n \n \n" && sleep 0.5
-
+msg act "Installing bash files..." && sleep 0.5
 
 
 # Check and backup the directories and file
@@ -104,14 +155,14 @@ for item in "$HOME/.bash" "$HOME/.bashrc"; do
         mkdir -p ~/.Bash-Backup-${USER}
         case $item in
             $HOME/.bash)
-                printf "${note} - A ${green}.bash${end} directory is available... Backing it up\n" 
+                msg att "A ${green}.bash${end} directory is available. backing it up.." 
                 mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
                 ;;
         esac
     elif [[ -f $item ]]; then
         case $item in
             $HOME/.bashrc)
-                printf "${note} - A ${cyan}.bashrc${end} file is available... Backing it up\n" 
+                msg att "A ${cyan}.bashrc${end} file is available, backing it up.." 
                 mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
                 ;;
         esac
@@ -120,11 +171,8 @@ done
 
 # now copy the .bash directory into the "$HOME" directory.
 
-printf "${attention} - Would you like to enable keybinds like vim? [ y/n ]\n"
+msg ask "Would you like to enable keybinds like vim? [ y/n ]"
 read -p "Select: " vim
-
-printf "${action} - Now installing the bash related files. \n \n"
-
 
 cp -r .bash ~/ 2>&1 | tee -a "$log"
 
@@ -136,13 +184,13 @@ ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
 
 # installing bash autosuggestions and syntal highlighting.
 if [ -d ~/.bash ]; then
-    printf "${action} - Updating some scripts...\n" && sleep 1
+    msg act "Updating some scripts..." && sleep 1
 
-    curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - 2>&1 | tee -a "$log"
-    bash ble-nightly/ble.sh --install ~/.local/share 2>&1 | tee -a "$log"
+    curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - 2>&1 | tee -a "$log" &> /dev/null
+    bash ble-nightly/ble.sh --install ~/.local/share 2>&1 | tee -a "$log" &> /dev/null
 
     if [ -f ~/.blerc ]; then
-        printf "${action} - Backing up ~/.blerc file \n"
+        msg act "Backing up ~/.blerc file"
         mv ~/.blerc "$HOME/Bash-Backup-${USER}/"
     fi
 
@@ -156,27 +204,26 @@ sleep 1
 chmod +x ~/.bash/change_prompt.sh
 
 
-printf "${attention} - Would you like to install a Nerd font? In this case, the 'JetBrains Mono Nerd' font? It is important. [ y/n ] \n"
+msg ask "Would you like to install a Nerd font? In this case, the ${yellow}JetBrains Mono Nerd Font${end}? It is important. [ y/n ]"
 read -p "Select: " font
 
 if [[ "$font" =~ ^[Yy]$ ]]; then
-    printf "${green} [ * ] - Installing the ${cyan}JetBrains Mono Nerd font ${end} \n"
+    msg act "Installing the ${yello}JetBrains Mono Nerd Font${end}"
 
     DOWNLOAD_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz"
     # Maximum number of download attempts
     MAX_ATTEMPTS=2
     for ((ATTEMPT = 1; ATTEMPT <= MAX_ATTEMPTS; ATTEMPT++)); do
         curl -OL "$DOWNLOAD_URL" && break
-        printf "Download attempt $ATTEMPT failed. Retrying in 2 seconds...\n"
+        msg att "Download attempt $ATTEMPT failed. Retrying in 2 seconds..."
         sleep 2
     done
 
     # Check if the JetBrainsMono folder exists and delete it if it does
     if [ -d ~/.local/share/fonts/JetBrainsMonoNerd ]; then
-        rm -rf ~/.local/share/fonts/JetBrainsMonoNerd
+        rm -rf ~/.local/share/fonts/JetBrainsMonoNerd &> /dev/null
     fi
 
-    mkdir -p ~/.local/share/fonts/JetBrainsMonoNerd
     # Extract the new files into the JetBrainsMono folder and log the output
     tar -xJkf JetBrainsMono.tar.xz -C ~/.local/share/fonts/JetBrainsMonoNerd
 
@@ -185,10 +232,10 @@ if [[ "$font" =~ ^[Yy]$ ]]; then
 
     # clean up 
     if [ -d "JetBrainsMono.tar.xz" ]; then
-        rm -r JetBrainsMono.tar.xz
+        rm -r JetBrainsMono.tar.xz &> /dev/null
     fi
 else
-    printf "${attention} - Please install a nerd font manually and set it to your terminal. \n"
+    msg skp "Skipping installing the ${yellow}JetBrainsMono Nerd Font${end}.\n         Please install a nerd font manually and set it to your terminal..."
 fi
 
 eval "$(fzf --bash)" # fzf
@@ -200,26 +247,21 @@ source ~/.bash/.bashrc 2>&1 | tee -a "$log"
 sleep 1 && clear
 
 # Function to print with typewriter effect
-typewriter() {
-    local text="$1"
-    local delay="$2"
-        printf "[ * ]\n"
-    for (( i=0; i<${#text}; i++ )); do
-        printf "%s" "${text:$i:1}"
-        sleep "$delay"
-    done
-    printf "${end}\n"
-}
+# typewriter() {
+#     local text="$1"
+#     local delay="$2"
+#         printf "[ * ]\n"
+#     for (( i=0; i<${#text}; i++ )); do
+#         printf "%s" "${text:$i:1}"
+#         sleep "$delay"
+#     done
+#     printf "${end}\n"
+# }
 
 # Call the function with the message and a delay of 0.05 seconds
-completed="Bash configuration has been completed! Close the tarminal and open it again."
-typewriter " $completed" 0.07
-sleep 0.5
-echo
+msg dn "Bash configuration has been completed! Close the tarminal and open it again."
+msg att "To change the shell prompt, type style and select from 1 to 6"
 
-completed="To change the shell prompt, type style and select from 1 to 6"
-typewriter " $completed" 0.07
-sleep 0.5
-exit 0
+sleep 3
 
 #__________ ( code finishes here ) __________#
