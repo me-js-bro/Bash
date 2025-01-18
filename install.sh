@@ -238,25 +238,7 @@ else
     msg skp "Skipping installing the ${yellow}JetBrainsMono Nerd Font${end}.\n         Please install a nerd font manually and set it to your terminal..."
 fi
 
-eval "$(fzf --bash)" # fzf
-eval "$(thefuck --alias)" #thefu*k
-eval "$(thefuck --alias hell)" #thefu*k as hell
-eval "$(zoxide init bash)" # zoxide
-source ~/.bash/.bashrc 2>&1 | tee -a "$log"
-
 sleep 1 && clear
-
-# Function to print with typewriter effect
-# typewriter() {
-#     local text="$1"
-#     local delay="$2"
-#         printf "[ * ]\n"
-#     for (( i=0; i<${#text}; i++ )); do
-#         printf "%s" "${text:$i:1}"
-#         sleep "$delay"
-#     done
-#     printf "${end}\n"
-# }
 
 # Call the function with the message and a delay of 0.05 seconds
 msg dn "Bash configuration has been completed! Close the tarminal and open it again."

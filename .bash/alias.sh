@@ -25,6 +25,8 @@ alias src='source ~/.bash/.bashrc' #source .bashrc
 alias clr='clear'   #clear
 alias cls='clear'
 alias clar='clear'
+alias c='clear'
+alias q='exit'
 
 alias rm='fn_removal' #remove both file & direvtory ( one file / directory at a time )
 alias srm='sudo rm -rf' # remove in a sude command

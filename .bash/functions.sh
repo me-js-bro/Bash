@@ -173,7 +173,6 @@ fn_compile_cpp() {
     fi
 }
 
-
 git_info() {
   # Check if current directory is a Git repository
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -195,6 +194,16 @@ git_info() {
       fi
     fi
   fi
+}
+
+# fn for yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
 # # Function to capture the start time
