@@ -173,6 +173,7 @@ fn_compile_cpp() {
     fi
 }
 
+
 git_info() {
   # Check if current directory is a Git repository
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -185,7 +186,7 @@ git_info() {
 
     # Print information
     if [[ -n "$branch_name"  ]]; then
-      printf "\e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+      printf "on \e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
 
       if [[ "$unpushed_count" -gt 0 ]]; then
         printf "\e[1;38;5;214m!$unpushed_count \e[3;0m\n"  # Unpushed count in orange
@@ -206,38 +207,45 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-# # Function to capture the start time
+# Function to capture the start time
 preexec() {
     export command_start_time=$(date +%s)
 }
 
 # Function to capture the end time and calculate elapsed time
 precmd() {
-    if [[ -n $command_start_time && $command_start_time -ne 0 ]]; then
-        local command_end_time=$(date +%s)
-        local elapsed_time=$((command_end_time - command_start_time))
+    # Check if we are in transient prompt mode
+    if [[ $prompt_ps1_transient != "always" ]]; then
+        if [[ -n $command_start_time && $command_start_time -ne 0 ]]; then
+            local command_end_time=$(date +%s)
+            local elapsed_time=$((command_end_time - command_start_time))
 
-        # Convert elapsed time to minutes and seconds
-        local minutes=$((elapsed_time / 60))
-        local seconds=$((elapsed_time % 60))
+            # Convert elapsed time to minutes and seconds
+            local minutes=$((elapsed_time / 60))
+            local seconds=$((elapsed_time % 60))
 
-        # Only display elapsed time if it is greater than zero
-        if [[ $elapsed_time -gt 0 ]]; then
-            if [[ $minutes -gt 0 ]]; then
-                export elapsed_time_display=$(printf "\n%dm %ds" $minutes $seconds)
+            # Only display elapsed time if it is greater than zero
+            if [[ $elapsed_time -gt 0 ]]; then
+                if [[ $minutes -gt 0 ]]; then
+                    export elapsed_time_display=$(printf "\e[90m 󱎫 %dm %ds\e[0m" $minutes $seconds)
+                else
+                    export elapsed_time_display=$(printf "\e[90m 󱎫 %ds\e[0m" $seconds)
+                fi
             else
-                export elapsed_time_display=$(printf "\n%ds" $seconds)
+                export elapsed_time_display=""
             fi
         else
             export elapsed_time_display=""
         fi
     else
+        # Clear the elapsed time display in transient mode
         export elapsed_time_display=""
     fi
+
     export command_start_time=0  # Reset start time to 0 after each command
 }
 
 # Function to capture the current time
 current_time() {
-    echo $(date +%I:%M\ %p)
+    echo -e "\e[90m $(date +%I:%M:%S\ %p)\e[0m"
 }

@@ -43,13 +43,14 @@ Make sure you install any of the nerd font's and set that font in your terminal,
 3. Syntax Highlighting <br>
 4. Auto Suggestions <br>
 5. Fuzzy finder <br>
-6. Tree view of directories, files and sub directories <br>
-7. Memorizing the directories <br>
-8. Command spell correction <br>
-9. Git branch name and left commits <br>
-10. Some cool looking themes <br>
+6. Supports transient prompt like 'zsh'
+7. Tree view of directories, files and sub directories <br>
+8. Memorizing the directories <br>
+9. Command spell correction <br>
+10. Git branch name and left commits <br>
+11. Some cool looking themes <br>
 
-- Why don't you explore by yourself? ( 0 \_ 0 )
+- Why don't you explore it by yourself? ( 0 \_ 0 )
 
 <br>
 
@@ -87,17 +88,13 @@ Simply go to `~/.bash` directory. Inside it, you will find `.bashrc`, `alias` an
 
 ### 1) Directory Navigation and File Management
 
-| Shortcut    | Command          | Description                                                                  |
-| ----------- | ---------------- | ---------------------------------------------------------------------------- |
-| `cd`        | `cd`             | Change directory. If the directory does not exist, it will ask to create it. |
-| `downloads` | `cd ~/Downloads` | Change to the Downloads directory.                                           |
-| `pictures`  | `cd ~/Pictures`  | Change to the Pictures directory.                                            |
-| `videos`    | `cd ~/Videos`    | Change to the Videos directory.                                              |
-| `dir`       | `mkdir`          | Make a directory.                                                            |
-| `file`      | `touch`          | Create a file.                                                               |
-| `rm`        | `rm -rf`         | Remove both files and directories.                                           |
-| `srm`       | `sudo rm -rf`    | Remove both files and directories with the sudo command                      |
-| `ebash`     | `code .bash`     | Open .bash directory with the vs code to edit                                |
+| Shortcut | Command         | Description                                                                  |
+| -------- | --------------- | ---------------------------------------------------------------------------- |
+| `cd`     | `cd`            | Change directory. If the directory does not exist, it will ask to create it. |
+| `file`   | `touch`         | Create a file.                                                               |
+| `rm`     | `rm -rf`        | Remove both files and directories.                                           |
+| `cp`     | `cp` or `cp -r` | Remove both files and directories.                                           |
+| `srm`    | `sudo rm -rf`   | Remove both files and directories with the sudo command                      |
 
 ### 2) Updated, Install & Uninstall Related
 
