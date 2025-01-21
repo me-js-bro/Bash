@@ -227,9 +227,11 @@ precmd() {
             # Only display elapsed time if it is greater than zero
             if [[ $elapsed_time -gt 0 ]]; then
                 if [[ $minutes -gt 0 ]]; then
-                    export elapsed_time_display=$(printf "\e[90m 󱎫 %dm %ds\e[0m" $minutes $seconds)
-                else
-                    export elapsed_time_display=$(printf "\e[90m 󱎫 %ds\e[0m" $seconds)
+                    export elapsed_time_display=$(printf "\e[90m  %dm %ds\e[0m" $minutes $seconds)
+                elif [[ $seconds -gt 2 ]]; then
+                    export elapsed_time_display=$(printf "\e[90m  %ds\e[0m" $seconds)
+                elif [[ $seconds -le 2 ]]; then
+                    export elapsed_time_display=$(printf " \n")
                 fi
             else
                 export elapsed_time_display=""

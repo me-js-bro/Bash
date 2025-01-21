@@ -14,11 +14,10 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# export the command execution time functions
 export PROMPT_COMMAND='precmd; preexec'
 
 # Set prompt
-PS1='\n╭( \u @ \h )─[$(if [[ "$PWD" = "$HOME" ]]; then echo " \e[1;36m \e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;32m \e[1;0m"; else echo "\e[1;33m in ...\W\e[1;0m"; fi) ]$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo ─{ $(git_info)} || echo "")\n╰─\e[1;32m❯❯❯\e[1;0m '
+PS1='$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
 
 # User specific environment
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
@@ -78,15 +77,18 @@ _fzf_comprun() {
 # Enable case-insensitive tab completion
 bind "set completion-ignore-case on"
 
+# Enable colorized output for ls and completion
+export LS_COLORS=$(dircolors -b)
+
 # Configure FZF for directory preview
 if command -v fzf &> /dev/null; then
   _fzf_preview() {
-    eza --color=always --icons=always "$1"
+    ls --color=auto "$1"
   }
 
   # For zoxide integration with FZF (if zoxide is installed)
   if command -v zoxide &> /dev/null; then
-    alias zi='zoxide query -i | xargs -r eza --color=always --icons=always "$1"'
+    alias zi='zoxide query -i | xargs -r ls --color=auto'
   fi
 fi
 
@@ -116,4 +118,3 @@ bleopt prompt_ps1_final="❯ "
 # Define the right prompt text
 # bleopt prompt_rps1='\n$(current_time)'
 bleopt prompt_rps1='\n${elapsed_time_display}'
-
