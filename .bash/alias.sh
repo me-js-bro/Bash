@@ -81,6 +81,3 @@ alias mat='cmatrix'
 
 # make executable script
 alias exe='chmod +x'
-
-# change style
-alias style='bash ~/.bash/change_prompt.sh'

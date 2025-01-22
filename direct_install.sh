@@ -19,15 +19,7 @@ cyan="\e[1;36m"
 orange="\e[1;38;5;214m"
 end="\e[1;0m"
 
-# initial texts
-attention="[${orange} ATTENTION ${end}]"
-action="[${green} ACTION ${end}]"
-note="[${magenta} NOTE ${end}]"
-done="[${cyan} DONE ${end}]"
-ask="[${orange} QUESTION ${end}]"
-error="[${red} ERROR ${end}]"
-
-printf "${orange}[ * ] Starting the script.. Please have patience..${end} (•‿•)\n"
+printf "${orange}**${end} Starting the script...\n" && sleep 1
 
 install_git() {
 
@@ -56,26 +48,25 @@ install_git() {
         fi
 
     else
-        printf "Unsupported distribution for now..Sorry.\n"
+        printf "${red}><${end} Unsupported distribution for now..Sorry.\n"
         exit 1
     fi
 }
 
-
-install_git && printf "${cyan}[ * ] Git was installed..${end}\n"
+install_git && printf "${cyan}::${end} Git was installed..\n"
 
 sleep 1
 
-printf "\n${green}[ * ] Cloning the installation repository... Please have patience... ${end}\n"
+printf "\n${green}**${end} Cloning the installation repository...\n"
 
 [[ "$(pwd)" != "$HOME" ]] && cd "$HOME"
 
 if [[ -d "Bash" ]]; then
     cd Bash
     if git pull origin main; then
-        printf "\n${cyan}[ * ] Repository was updated successfully.${end} \n${green}[ * ] Now starting the main script... ${end}\n" && sleep 1 && clear
+        printf "\n${cyan}::${end} Repository was updated successfull..\n${green}**${end} Now starting the main script...\n" && sleep 1 && clear
     else
-        printf "\n${red}[ ! ] Failed to update the repository..${end}\n"
+        printf "\n${red}><${end} Failed to update the repository..."
         exit 1
     fi
     
@@ -83,9 +74,9 @@ if [[ -d "Bash" ]]; then
     ./install.sh
 else
     if git clone --depth=1 https://github.com/me-js-bro/Bash.git; then
-        printf "\n${cyan}[ * ] Repository was cloned successfully!${end} \n${green}[ * ] Now starting the main script... ${end}\n" && sleep 1 && clear
+        printf "\n${cyan}::${end} Repository was cloned successfully!\n${green}**${end} Now starting the main script...\n" && sleep 1 && clear
     else
-        printf "\n${red}[ ! ] Failed to clone the repository. Please check your internet connection or the repository URL.${end}\n"
+        printf "\n${red}><${end} Failed to clone the repository.\n"
         exit 1
     fi
 

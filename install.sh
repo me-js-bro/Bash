@@ -146,13 +146,22 @@ elif command -v dnf &> /dev/null; then  # Fedora
         sudo dnf install -y thefuck 2>&1 | tee -a "$log"
 fi
 
-msg act "Installing bash files..." && sleep 0.5
+# installing starship
+if command -v pacman &> /dev/null; then
+    fn_install starship
+elif command -v zypper &> /dev/null; then
+    fn_install starship
+elif command -v dnf &> /dev/null; then
+    sudo dnf copr enable -y atim/starship
+    fn_install starship
+fi
 
+msg act "Installing bash files..." && sleep 0.5
 
 # Check and backup the directories and file
 for item in "$HOME/.bash" "$HOME/.bashrc"; do
+    mkdir -p ~/.Bash-Backup-${USER}
     if [[ -d $item ]]; then
-        mkdir -p ~/.Bash-Backup-${USER}
         case $item in
             $HOME/.bash)
                 msg att "A ${green}.bash${end} directory is available. backing it up.." 
@@ -174,7 +183,7 @@ done
 msg ask "Would you like to enable keybinds like vim? [ y/n ]"
 read -p "Select: " vim
 
-cp -r .bash ~/ 2>&1 | tee -a "$log"
+cp -r "$dir/.bash" "$HOME/" 2>&1 | tee -a "$log"
 
 if [[ "$vim" =~ ^[Yy]$ ]]; then
     echo "set -o vi" >> ~/.bash/.bashrc
@@ -192,17 +201,17 @@ if [ -d ~/.bash ]; then
     if [ -f ~/.blerc ]; then
         msg act "Backing up ~/.blerc file"
         mv ~/.blerc "$HOME/Bash-Backup-${USER}/"
+        cp ~/.bash/.blerc ~/
     fi
 
-    touch ~/.blerc
-    echo "ble-face -s auto_complete fg=8,bg=none" >> ~/.blerc
-    echo "ble-face -s syntax_default fg=1" >> ~/.blerc
+    if [ -f ~/.config/starship.toml ]; then
+        msg act "Backing up starship.toml..."
+        mv ~/.config/starship.toml ~/.config/starship.toml.back
+        cp "$dir/starship.toml" "$HOME/.config/"
+    fi
 fi
 
 sleep 1
-
-chmod +x ~/.bash/change_prompt.sh
-
 
 msg ask "Would you like to install a Nerd font? In this case, the ${yellow}JetBrains Mono Nerd Font${end}? It is important. [ y/n ]"
 read -p "Select: " font
@@ -242,8 +251,7 @@ sleep 1 && clear
 
 # Call the function with the message and a delay of 0.05 seconds
 msg dn "Bash configuration has been completed! Close the tarminal and open it again."
-msg att "To change the shell prompt, type style and select from 1 to 6"
 
-sleep 3
+sleep 2
 
 #__________ ( code finishes here ) __________#
