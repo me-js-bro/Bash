@@ -14,10 +14,10 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-# export PROMPT_COMMAND='precmd; preexec'
+export PROMPT_COMMAND='precmd; preexec'
 
 # Set prompt PS1
-# PS1='$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi) $(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "")\n\e[1;32m❯\e[1;0m '
+PS1='$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi)\n\e[1;32m❯\e[1;0m '
 
 
 # set prompt starship
@@ -116,9 +116,9 @@ source ~/.local/share/blesh/ble.sh
 source ~/.bash/.blerc
 
 # transient prompt
-# bleopt prompt_ps1_transient=always
-# bleopt prompt_ps1_final="❯ "
+bleopt prompt_ps1_transient=always
+bleopt prompt_ps1_final="❯ "
 
 # Define the right prompt text
 # bleopt prompt_rps1='\n$(current_time)'
-# bleopt prompt_rps1='\n${elapsed_time_display}'
+bleopt prompt_rps1='\n$(git rev-parse --is-inside-work-tree >/dev/null 2>&1 && echo $(git_info) || echo "") ${elapsed_time_display}'

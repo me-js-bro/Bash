@@ -6,9 +6,6 @@
 # ┗┛┛•  ┻┛┛ ┗┛     
 #---------------#
 
-# exit the script if there's any error
-set -e
-
 # color defination
 red="\e[1;31m"
 green="\e[1;32m"
@@ -73,15 +70,16 @@ if [[ -d "Bash" ]]; then
     chmod +x install.sh
     ./install.sh
 else
-    if git clone --depth=1 https://github.com/me-js-bro/Bash.git; then
-        printf "\n${cyan}::${end} Repository was cloned successfully!\n${green}**${end} Now starting the main script...\n" && sleep 1 && clear
+    printf "\n${green}**${end} Cloning the scripts...\n" && sleep 1 && clear
+    git clone --depth=1 https://github.com/me-js-bro/Bash.git "$HOME/Bash" &> /dev/null
+
+    if [[ -d "$HOME/Bash" ]]; then
+        cd Bash
+        chmod +x install.sh
+        ./install.sh
     else
-        printf "\n${red}><${end} Failed to clone the repository.\n"
+        printf "${red}><${end} Failed to clone repository...\n"
         exit 1
     fi
-
-    cd Bash
-    chmod +x install.sh
-    ./install.sh
 fi
 

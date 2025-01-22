@@ -228,9 +228,9 @@ precmd() {
             if [[ $elapsed_time -gt 0 ]]; then
                 if [[ $minutes -gt 0 ]]; then
                     export elapsed_time_display=$(printf "\e[90m  %dm %ds\e[0m" $minutes $seconds)
-                elif [[ $seconds -gt 2 ]]; then
+                elif [[ $seconds -gt 3 ]]; then
                     export elapsed_time_display=$(printf "\e[90m  %ds\e[0m" $seconds)
-                elif [[ $seconds -le 2 ]]; then
+                elif [[ $seconds -le 3 ]]; then
                     export elapsed_time_display=$(printf " \n")
                 fi
             else
