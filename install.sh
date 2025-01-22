@@ -207,8 +207,8 @@ if [ -d ~/.bash ]; then
     if [ -f ~/.config/starship.toml ]; then
         msg act "Backing up starship.toml..."
         mv ~/.config/starship.toml ~/.config/starship.toml.back
-        cp "$dir/starship.toml" "$HOME/.config/"
     fi
+    cp "$dir/starship.toml" "$HOME/.config/"
 fi
 
 sleep 1
