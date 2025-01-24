@@ -116,7 +116,6 @@ eval "$(zoxide init bash)" # zoxide
 # ================================= source functions, aliases and blers ================================= #
 source ~/.bash/functions.sh
 source ~/.bash/alias.sh
-source ~/.local/share/blesh/ble.sh
 source ~/.bash/.blerc
 
 

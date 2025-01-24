@@ -1,4 +1,3 @@
-source ~/.local/share/blesh
 ble-face -s auto_complete fg=8,bg=none
 ble-face -s syntax_default fg=99,bold
 ble-face -s syntax_error fg=red,bg=none

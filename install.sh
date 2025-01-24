@@ -43,7 +43,6 @@ msg() {
     esac
 }
 
-
 # log file
 dir=`pwd`
 log="$dir/bash-install-$(date +%I:%M_%p).log"
@@ -68,7 +67,19 @@ for_opensuse=(
     python311-pipx
 )
 
-sleep 1 && clear
+clear && printf "${green}::${end} Starting the script...\n"
+sleep 1
+echo
+
+# asking some questions
+msg ask "Would you like to install a Nerd font? In this case, the ${yellow}JetBrains Mono Nerd Font${end}? It is important. [ y/n ]"
+read -p "Select: " font
+
+echo
+
+msg ask "Would you like to use ${cyan}starship${end} as the bash prompt? [ y/n ]"
+read -p "Select: " prmpt
+
 
 # package installation function
 fn_install() {
@@ -140,10 +151,10 @@ if command -v zypper &> /dev/null; then
     fi
 
 elif command -v pacman &> /dev/null; then  # Arch Linux
-        sudo pacman -S --noconfirm thefuck 2>&1 | tee -a "$log"
+        fn_install thefuck 2>&1 | tee -a "$log"
 
 elif command -v dnf &> /dev/null; then  # Fedora
-        sudo dnf install -y thefuck 2>&1 | tee -a "$log"
+        fn_install thefuck 2>&1 | tee -a "$log"
 fi
 
 # installing starship
@@ -165,14 +176,14 @@ for item in "$HOME/.bash" "$HOME/.bashrc"; do
         case $item in
             $HOME/.bash)
                 msg att "A ${green}.bash${end} directory is available. backing it up.." 
-                mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}/.bash"-$(date +%I:%M:%S%p) 2>&1 | tee -a "$log"
                 ;;
         esac
     elif [[ -f $item ]]; then
         case $item in
             $HOME/.bashrc)
                 msg att "A ${cyan}.bashrc${end} file is available, backing it up.." 
-                mv "$item" "$HOME/.Bash-Backup-${USER}/" 2>&1 | tee -a "$log"
+                mv "$item" "$HOME/.Bash-Backup-${USER}/.bashrc"-$(date +%I:%M:%S%p) 2>&1 | tee -a "$log"
                 ;;
         esac
     fi
@@ -186,8 +197,8 @@ ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
 if [ -d ~/.bash ]; then
     msg act "Updating some scripts..." && sleep 1
 
-    curl -LO https://github.com/akinomyoga/ble.sh/releases/download/v0.4.0-devel3/ble-0.4.0-devel3.tar.xz 
-    tar xJf ble-0.4.0-devel3.tar.xz -C ~/.local/share/blesh 2>&1 | tee -a "$log" &> /dev/null
+    curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - 2>&1 | tee -a "$log" &> /dev/null
+    bash ble-nightly/ble.sh --install ~/.local/share 2>&1 | tee -a "$log" &> /dev/null
 
     if [ -f ~/.blerc ]; then
         msg act "Backing up ~/.blerc file"
@@ -195,17 +206,28 @@ if [ -d ~/.bash ]; then
         ln -sf ~/.bash/.blerc ~/.blerc 2>&1 | tee -a "$log"
     fi
 
-    # if [ -f ~/.config/starship.toml ]; then
-    #     msg act "Backing up starship.toml..."
-    #     mv ~/.config/starship.toml ~/.config/starship.toml.back
-    # fi
-    # cp "$dir/starship.toml" "$HOME/.config/"
+    if [[ "$prmpt" =~ ^[Y|y]$ ]]; then
+        if [ -f ~/.config/starship.toml ]; then
+            msg act "Backing up your old starship.toml..." && sleep 1
+            mv ~/.config/starship.toml ~/.config/starship.toml.back
+        fi
+        cp "$dir/starship.toml" "$HOME/.config/"
+        msg dn "Copied the new starship.toml file."
+
+
+        # Comment out the PS1 line
+        sed -i 's/^PS1=/# PS1=/' ~/.bash/.bashrc
+
+        # Uncomment the starship init bash line
+        sed -i 's/^# eval "\(.*starship init bash.*\)"/eval "\1"/' ~/.bash/.bashrc
+
+        msg dn "Updated .bashrc file. Commented out PS1 and enabled Starship prompt."
+    fi
 fi
 
 sleep 1
+echo
 
-msg ask "Would you like to install a Nerd font? In this case, the ${yellow}JetBrains Mono Nerd Font${end}? It is important. [ y/n ]"
-read -p "Select: " font
 
 if [[ "$font" =~ ^[Yy]$ ]]; then
     msg act "Installing the ${yello}JetBrains Mono Nerd Font${end}"
