@@ -50,7 +50,7 @@ Make sure you install any of the nerd font's and set that font in your terminal,
 10. Git branch name and left commits <br>
 11. Some cool looking themes <br>
 
-- Why don't you explore it by yourself? ( 0 \_ 0 )
+Why don't you give it a try?
 
 <br>
 

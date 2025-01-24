@@ -79,7 +79,7 @@ alias sys='btop'
 alias clock='tty-clock -c -t -D -s'
 alias mat='cmatrix'
 
-alias style='~/.bash/change_prompt.sh'
+alias style="~/.bash/change_prompt.sh"
 
 # make executable script
 alias exe='chmod +x'

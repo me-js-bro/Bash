@@ -249,5 +249,5 @@ precmd() {
 
 # Function to capture the current time
 current_time() {
-    echo -e "\e[90m $(date +%I:%M:%S\ %p)\e[0m"
+    echo -e "\e[90m $(date +%I:%M\ %p)\e[0m"
 }

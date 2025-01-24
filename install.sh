@@ -179,36 +179,27 @@ for item in "$HOME/.bash" "$HOME/.bashrc"; do
 done
 
 # now copy the .bash directory into the "$HOME" directory.
-
-msg ask "Would you like to enable keybinds like vim? [ y/n ]"
-read -p "Select: " vim
-
 cp -r "$dir/.bash" "$HOME/" 2>&1 | tee -a "$log"
-
-if [[ "$vim" =~ ^[Yy]$ ]]; then
-    echo "set -o vi" >> ~/.bash/.bashrc
-fi
-
 ln -sf ~/.bash/.bashrc ~/.bashrc 2>&1 | tee -a "$log"
 
 # installing bash autosuggestions and syntal highlighting.
 if [ -d ~/.bash ]; then
     msg act "Updating some scripts..." && sleep 1
 
-    curl -L https://github.com/akinomyoga/ble.sh/releases/download/nightly/ble-nightly.tar.xz | tar xJf - 2>&1 | tee -a "$log" &> /dev/null
-    bash ble-nightly/ble.sh --install ~/.local/share 2>&1 | tee -a "$log" &> /dev/null
+    curl -LO https://github.com/akinomyoga/ble.sh/releases/download/v0.4.0-devel3/ble-0.4.0-devel3.tar.xz 
+    tar xJf ble-0.4.0-devel3.tar.xz -C ~/.local/share/blesh 2>&1 | tee -a "$log" &> /dev/null
 
     if [ -f ~/.blerc ]; then
         msg act "Backing up ~/.blerc file"
         mv ~/.blerc "$HOME/Bash-Backup-${USER}/"
-        cp ~/.bash/.blerc ~/
+        ln -sf ~/.bash/.blerc ~/.blerc 2>&1 | tee -a "$log"
     fi
 
-    if [ -f ~/.config/starship.toml ]; then
-        msg act "Backing up starship.toml..."
-        mv ~/.config/starship.toml ~/.config/starship.toml.back
-    fi
-    cp "$dir/starship.toml" "$HOME/.config/"
+    # if [ -f ~/.config/starship.toml ]; then
+    #     msg act "Backing up starship.toml..."
+    #     mv ~/.config/starship.toml ~/.config/starship.toml.back
+    # fi
+    # cp "$dir/starship.toml" "$HOME/.config/"
 fi
 
 sleep 1
@@ -250,8 +241,7 @@ fi
 sleep 1 && clear
 
 # Call the function with the message and a delay of 0.05 seconds
-msg dn "Bash configuration has been completed! Close the tarminal and open it again."
-
-sleep 2
+msg dn "Bash configuration has been completed! Close the tarminal and open it again." && sleep 2
+exit 0
 
 #__________ ( code finishes here ) __________#
