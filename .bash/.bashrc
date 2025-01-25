@@ -22,6 +22,7 @@ export PROMPT_COMMAND='precmd; preexec'
 PS1='$(if [[ "$PWD" = "$HOME" ]]; then echo "\e[1;36m\e[1;0m"; elif [[ "$PWD" = "/" ]]; then echo " \e[1;0m"; elif [[ ! "$PWD" == "$HOME" ]]; then echo "\n\w"; fi)\n\e[1;32m❯\e[1;0m '
 
 # set prompt starship
+export STARSHIP_CONFIG=~/.bash/starship/starship.toml
 # eval "$(starship init bash)"
 
 

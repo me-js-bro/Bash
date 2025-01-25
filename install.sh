@@ -151,10 +151,27 @@ if command -v zypper &> /dev/null; then
     fi
 
 elif command -v pacman &> /dev/null; then  # Arch Linux
-        fn_install thefuck 2>&1 | tee -a "$log"
+    fn_install thefuck 2>&1 | tee -a "$log"
 
 elif command -v dnf &> /dev/null; then  # Fedora
-        fn_install thefuck 2>&1 | tee -a "$log"
+    if command -v fuck &> /dev/null; then
+        msg skp "Skipping thefu*k, it was already installed..."
+    else
+        if command -v pip &> /dev/null; then
+            pip install thefuck 2>&1 | tee -a "$log"
+        elif command -v pip3 &> /dev/null; then
+            pip3 install thefuck 2>&1 | tee -a "$log"
+        elif command -v pipx &> /dev/null; then
+            pipx install thefuck 2>&1 | tee -a "$log"
+        fi
+
+        sleep 1
+
+        if command -v fuck &> /dev/null; then
+            msg dn "thef*ck was installed successfully!" && sleep 1
+        fi
+    fi
+
 fi
 
 # installing starship
