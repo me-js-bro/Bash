@@ -173,28 +173,121 @@ fn_compile_cpp() {
     fi
 }
 
-
+# git info
 git_info() {
   # Check if current directory is a Git repository
   if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+
     # Get the current branch name
     branch_name=$(git branch --show-current 2>/dev/null)
 
-    # Get the number of unpushed commits (using wc)
-    unpushed_count=$(git status --porcelain=v1 | wc -l 2>/dev/null || printf 0)
+    # Count untracked files
+    untracked_count=$(git status --porcelain | grep '^??' | wc -l)
 
+    # Count unstaged changes (modified but not staged)
+    unstaged_count=$(git diff --name-only | wc -l)
+
+    # Count staged changes (staged but not committed)
+    staged_count=$(git diff --cached --name-only | wc -l)
 
     # Print information
-    if [[ -n "$branch_name"  ]]; then
-      printf "on \e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # add this if you want a blinking icon "\u001b[5m"
+    if [[ -n "$branch_name" ]]; then
+      printf "on \e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # Git branch with icon
 
-      if [[ "$unpushed_count" -gt 0 ]]; then
-        printf "\e[1;38;5;214m!$unpushed_count \e[3;0m\n"  # Unpushed count in orange
-      else
-        printf "\e[1;32m✓ \e[3;0m\n"  # shows an icon
+      if [[ "$untracked_count" -gt 0 ]]; then
+        printf "\e[1;31m!$untracked_count \e[3;0m\n"  # Show untracked files in orange
+      fi
+
+      if [[ "$staged_count" -gt 0 ]]; then
+        printf "\e[1;32m$staged_count \e[3;0m\n"  # Show staged files in green
+      fi
+      
+      if [[ "$unstaged_count" -gt 0 ]]; then
+        printf "\e[1;33m?$unstaged_count \e[3;0m\n"  # Show unstaged files in yellow
+
+      fi
+
+      if [[ "$untracked_count" -eq 0 && "$staged_count" -eq 0 && "$unstaged_count" -eq 0 ]]; then
+        printf "\e[1;32m✓ Clean \e[3;0m\n"  # Show clean repository status
       fi
     fi
   fi
+}
+
+# fn for easy git push
+gpush() {
+
+    # Push function
+    __push() {
+        local current="$1"
+        local commit="$2"
+        if [[ "$current" == "main" ]]; then
+            git add . && \
+            git commit -m "$commit" && \
+            git push
+        else
+            git add . && \
+            git commit -m "$commit" && \
+            git push origin "$current"
+        fi
+    }
+
+    # Check if current directory is a Git repository
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        # Get the current branch name
+        branch_name=$(git branch --show-current 2>/dev/null)
+
+        # Count untracked files
+        untracked_count=$(git status --porcelain | grep '^??' | wc -l)
+
+        # Count unstaged changes (modified but not staged)
+        unstaged_count=$(git diff --name-only | wc -l)
+
+        # Count staged changes (staged but not committed)
+        staged_count=$(git diff --cached --name-only | wc -l)
+
+        # Display information
+        if [[ -n "$branch_name" ]]; then
+            if [[ "$untracked_count" -gt 0 ]]; then
+                printf "=> %s untracked files\n" "$untracked_count"
+            fi
+
+            if [[ "$unstaged_count" -gt 0 ]]; then
+                printf "=> %s uncommitted changes\n" "$unstaged_count"
+            fi
+
+            if [[ "$staged_count" -gt 0 ]]; then
+                printf "=> %s staged changes\n" "$staged_count"
+            fi
+
+            if [[ "$untracked_count" -eq 0 && "$unstaged_count" -eq 0 && "$staged_count" -eq 0 ]]; then
+                printf "✓ Nothing to push.\n"
+            else
+                printf "=> %s branch\n" "$branch_name"
+                printf "\nWrite the commit message:\n"
+                read -p "=> " msg
+                sleep 0.5 && echo
+
+                if command -v gum &> /dev/null; then
+                    gum spin --spinner dot --title "Pushing to branch: $branch_name..." -- \
+                        sleep 2
+                        __push "$branch_name" "$msg"
+                else
+                    printf "Pushing to %s...\n" "$branch_name"
+                    __push "$branch_name" "$msg"
+                fi
+
+                # Check the result of the last command
+                if [[ "$untracked_count" -eq 0 && "$unstaged_count" -eq 0 && "$staged_count" -eq 0 ]]; then
+                    printf ":: Pushed successfully!\n"
+                else
+                    printf "!! Sorry, push failed. Please check for errors.\n"
+                fi
+            fi
+        fi
+    else
+        printf "!! Not inside a Git repository.\n"
+    fi
 }
 
 # fn for yazi
@@ -250,4 +343,14 @@ precmd() {
 # Function to capture the current time
 current_time() {
     echo -e "\e[90m $(date +%I:%M\ %p)\e[0m"
+}
+
+random_bars() {
+	columns=$(tput cols)
+	chars=(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
+	for ((i = 1; i <= $columns; i++))
+	do
+		echo -n "${chars[RANDOM%${#chars} + 1]}"
+	done
+	echo
 }
