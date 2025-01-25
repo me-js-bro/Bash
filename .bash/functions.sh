@@ -222,13 +222,13 @@ gpush() {
         local current="$1"
         local commit="$2"
         if [[ "$current" == "main" ]]; then
-            git add . && \
-            git commit -m "$commit" && \
-            git push
+            git add . >/dev/null 2>&1 && \
+            git commit -m "$commit" >/dev/null 2>&1 && \
+            git push >/dev/null 2>&1
         else
-            git add . && \
-            git commit -m "$commit" && \
-            git push origin "$current"
+            git add . >/dev/null 2>&1 && \
+            git commit -m "$commit" >/dev/null 2>&1 && \
+            git push origin "$current" >/dev/null 2>&1
         fi
     }
 
@@ -278,7 +278,7 @@ gpush() {
                 fi
 
                 # Check the result of the last command
-                if [[ "$untracked_count" -eq 0 && "$unstaged_count" -eq 0 && "$staged_count" -eq 0 ]]; then
+                if [[ $? -eq 0 ]]; then
                     printf ":: Pushed successfully!\n"
                 else
                     printf "!! Sorry, push failed. Please check for errors.\n"
