@@ -195,7 +195,7 @@ git_info() {
       printf "on \e[1;34m\e[1;32m $branch_name\e[1;0m\u001b[35;1m \e[1;0m"  # Git branch with icon
 
       if [[ "$untracked_count" -gt 0 ]]; then
-        printf "\e[1;31m!$untracked_count \e[3;0m\n"  # Show untracked files in orange
+        printf "\e[1;31m?$untracked_count \e[3;0m\n"  # Show untracked files in orange
       fi
 
       if [[ "$staged_count" -gt 0 ]]; then
@@ -203,7 +203,7 @@ git_info() {
       fi
       
       if [[ "$unstaged_count" -gt 0 ]]; then
-        printf "\e[1;33m?$unstaged_count \e[3;0m\n"  # Show unstaged files in yellow
+        printf "\e[1;33m!$unstaged_count \e[3;0m\n"  # Show unstaged files in yellow
 
       fi
 
@@ -214,7 +214,7 @@ git_info() {
   fi
 }
 
-# fn for easy git push
+# fn to push git commits easily
 gpush() {
 
     # Push function
@@ -222,13 +222,13 @@ gpush() {
         local current="$1"
         local commit="$2"
         if [[ "$current" == "main" ]]; then
-            git add . >/dev/null 2>&1 && \
-            git commit -m "$commit" >/dev/null 2>&1 && \
-            git push >/dev/null 2>&1
+            git add .
+            git commit -m "$commit"
+            git push
         else
-            git add . >/dev/null 2>&1 && \
-            git commit -m "$commit" >/dev/null 2>&1 && \
-            git push origin "$current" >/dev/null 2>&1
+            git add .
+            git commit -m "$commit"
+            git push origin "$current"
         fi
     }
 
@@ -264,21 +264,24 @@ gpush() {
                 printf "✓ Nothing to push.\n"
             else
                 printf "=> %s branch\n" "$branch_name"
-                printf "\nWrite the commit message:\n"
+                printf "\nWrite the commit message\n"
                 read -p "=> " msg
-                sleep 0.5 && echo
+                sleep 0.5
 
                 if command -v gum &> /dev/null; then
-                    gum spin --spinner dot --title "Pushing to branch: $branch_name..." -- \
+                    gum spin --spinner dot \
+                        --title "Pushing to branch: $branch_name" -- \
                         sleep 2
-                        __push "$branch_name" "$msg"
+                    __push "$branch_name" "$msg" &> /dev/null
                 else
-                    printf "Pushing to %s...\n" "$branch_name"
-                    __push "$branch_name" "$msg"
+                    printf "Pushing to branch: %s\n" "$branch_name"
+                    __push "$branch_name" "$msg" &> /dev/null
                 fi
 
+                sleep 1
+
                 # Check the result of the last command
-                if [[ $? -eq 0 ]]; then
+                if [[ "$untracked_count" -eq 0 || "$unstaged_count" -eq 0 || "$staged_count" -eq 0 ]]; then
                     printf ":: Pushed successfully!\n"
                 else
                     printf "!! Sorry, push failed. Please check for errors.\n"
