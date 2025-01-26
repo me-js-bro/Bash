@@ -208,7 +208,7 @@ git_info() {
       fi
 
       if [[ "$untracked_count" -eq 0 && "$staged_count" -eq 0 && "$unstaged_count" -eq 0 ]]; then
-        printf "\e[1;32m✓ Clean \e[3;0m\n"  # Show clean repository status
+        printf "\e[1;32m✓ \e[3;0m\n"  # Show clean repository status
       fi
     fi
   fi
