@@ -10,20 +10,20 @@
 
 ### Styles
 
-<p> <img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/1.png?raw=true" /> </p>
+<p> <img align="center" width="99%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/1.png?raw=true" /> </p>
 
-<p> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/3.png?raw=true" /></p>
+<p> <img align="center" width="49%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/2.png?raw=true" /> <img align="center" width="49%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/3.png?raw=true" /></p>
 
 <br>
 
 ### Features
 
 <p>
-<img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/find.png?raw=true" />
+<img align="center" width="99%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/find.png?raw=true" />
 
-<img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/cd.png?raw=true" /> <img align="center" width="49%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/fuck.png?raw=true" />
+<img align="center" width="49%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/cd.png?raw=true" /> <img align="center" width="49%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/fuck.png?raw=true" />
 
-<img align="center" width="99%" src="https://github.com/me-js-bro/Screen-Shots/blob/main/bash/ScreenShots/syntax-highlighting.png?raw=true" />
+<img align="center" width="99%" src="https://github.com/shell-ninja/Screen-Shots/blob/main/bash/ScreenShots/syntax-highlighting.png?raw=true" />
 
 </p>
 
@@ -63,7 +63,7 @@ You can directly run the command bellow and it will automaticly clone the reposi
 - Run this command in your terminal:
 
 ```
-bash <(curl https://raw.githubusercontent.com/me-js-bro/Bash/main/direct_install.sh)
+bash <(curl https://raw.githubusercontent.com/shell-ninja/Bash/main/direct_install.sh)
 ```
 
 ### Manual Installation
@@ -71,7 +71,7 @@ bash <(curl https://raw.githubusercontent.com/me-js-bro/Bash/main/direct_install
 - Open terminal and run these commands.
 
 ```
-git clone --depth=1 https://github.com/me-js-bro/Bash.git
+git clone --depth=1 https://github.com/shell-ninja/Bash.git
 
 cd Bash
 chmod +x install.sh
